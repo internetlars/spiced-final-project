@@ -2,6 +2,9 @@ const path = require("path");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+//webpack is a module bundler
+//compiles js files into one big file
+
 module.exports = () => ({
     entry: [
         "@babel/polyfill",
@@ -32,8 +35,10 @@ module.exports = () => ({
         rules: [
             {
                 test: /\.js$/,
+                // babel is a transpiler; it converts new JS into browser-safe JS!
                 loader: "babel-loader",
-            }, {
+            },
+            {
                 test: /\.css$/i,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -47,7 +52,9 @@ module.exports = () => ({
             },
         ],
     },
-    plugins: [new MiniCssExtractPlugin({
-        filename: 'bundle.css',
-    })],
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: "bundle.css",
+        }),
+    ],
 });
