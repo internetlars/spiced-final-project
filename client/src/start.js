@@ -4,10 +4,18 @@
 // lets import component
 // import { Component } from "react";
 import ReactDOM from "react-dom";
-import HelloWorld from "./helloworld";
+// import HelloWorld from "./helloworld";
+import Welcome from "./welcome";
+
+//user is logged out
+if (location.pathname == "/welcome") {
+    ReactDOM.render(<Welcome />, document.querySelector("main"));
+} else {
+    ReactDOM.render(<img src="logo.gif" />, document.querySelector("main"));
+}
 
 // references main from index.html, we only call it once in the whole project!
-ReactDOM.render(<HelloWorld />, document.querySelector("main"));
+// ReactDOM.render(<HelloWorld />, document.querySelector("main"));
 
 //function component
 // they are presentational/dumb - function is used to show stuff - you can't have logic in function components!
