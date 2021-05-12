@@ -1,5 +1,5 @@
 import React from "react";
-import { Component } from "react";
+// import { Component } from "react";
 import axios from "axios";
 
 // needs to be a class to conitionally render an error message! -> needs state
@@ -53,24 +53,34 @@ export default class Registration extends React.Component {
                         name="firstName"
                         onChange={(e) => this.handleChange(e)}
                         placeholder="first name"
+                        required
                     />
                     <input
                         name="lastName"
                         onChange={(e) => this.handleChange(e)}
                         placeholder="last name"
+                        required
                     />
                     <input
                         name="email"
                         type="email"
                         onChange={(e) => this.handleChange(e)}
                         placeholder="email"
+                        required
                     />
                     <input
                         name="pass"
                         type="password"
                         onChange={(e) => this.handleChange(e)}
+                        required
                     />
                     <button onClick={() => this.submit()}>register</button>
+                    <div>
+                        <span>
+                            already registered?
+                            <a href="#">Login</a>
+                        </span>
+                    </div>
                 </form>
             </div>
         );

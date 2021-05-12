@@ -6,12 +6,14 @@
 import ReactDOM from "react-dom";
 // import HelloWorld from "./helloworld";
 import Welcome from "./welcome";
+//part 4, let's install app (godmother of all components)
+import App from "./App";
 
 //user is logged out
 if (location.pathname == "/welcome") {
     ReactDOM.render(<Welcome />, document.querySelector("main"));
 } else {
-    ReactDOM.render(<img src="logo.gif" />, document.querySelector("main"));
+    ReactDOM.render(<App />, document.querySelector("main"));
 }
 
 // references main from index.html, we only call it once in the whole project!

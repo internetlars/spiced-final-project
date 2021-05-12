@@ -3,8 +3,8 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const db = require("./db");
-// const csurf = require("csurf");
-
+const cryptoRandomString = require("crypto-random-string");
+const csurf = require("csurf");
 const { hash, compare } = require("../bc");
 const cookieSession = require("cookie-session");
 let cookieSecret;
@@ -21,6 +21,13 @@ app.use(
     })
 );
 
+app.use(csurf());
+app.use(function (req, res, next) {
+    res.setHeader("x-frame-options", "deny");
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -32,14 +39,19 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 //Welcome route
-app.get("/welcome", function (req, res) {
-    console.log("welcome");
-    // if (req.session.userId) {
-    //     res.redirect("/");
-    // } else {
-    // }
-    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+app.get("/welcome", (req, res) => {
+    // console.log("welcome");
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    }
 });
+
+// app.post("/welcome", function (req, res) => {
+//     console.log("POST request was made to welcome route.");
+//     const {firstName, lastName, email, password}
+// })
 
 //Registration route
 app.post("/registration", (req, res) => {
@@ -66,14 +78,36 @@ app.post("/registration", (req, res) => {
     });
 });
 
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    db.getUser(email, password).then((result) => {
+        compare(password, result.rows[0].hashedPassword)
+            .then((match) => {
+                if (match) {
+                    req.session.userId = result.rows[0].id;
+                    res.json({
+                        success: true,
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("Error in POST route of login: ", err);
+            });
+    });
+});
+
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...
 // never delete or comment this route out ever!
 app.get("*", function (req, res) {
-    // if (!req.session.userId) {
-    //     res.redirect("/welcome");
-    // } else {
-    // }
-    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    }
 });
 
 // no specific reason why we switched port to 3001....
