@@ -23,3 +23,36 @@ module.exports.getUser = (email) => {
     const params = [email];
     return db.query(q, params);
 };
+
+// check verification code
+module.exports.checkVerification = (email) => {
+    const q = `
+    SELECT * FROM my_table
+    WHERE email = $1 AND 
+    CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes',
+    `;
+    const params = [email];
+    return db.query(q, params);
+};
+
+//insert code into new table (reset_codes)
+module.exports.insertCode = (code, email) => {
+    const q = `
+    INSERT INTO reset_codes (code, email)
+    VALUES ($1, $2)
+    RETURNING *
+    `;
+    const params = [code, email];
+
+    return db.query(q, params);
+};
+
+//update password of user's table my email
+module.exports.updatePassword = (hashedPassword, email) => {
+    const q = `
+    UPDATE users SET hashedPassword = $1 WHERE email = $2 RETURNING *,
+    
+    `;
+    const params = [hashedPassword, email];
+    return db.query(q, params);
+};

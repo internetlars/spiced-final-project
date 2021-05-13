@@ -1,5 +1,4 @@
 const { genSalt, hash, compare } = require("bcryptjs");
-module.exports.hash = (password) =>
-    genSalt().then((salt) => hash(password, salt));
+exports.hash = (password) => genSalt().then((salt) => hash(password, salt));
 
-module.exports.compare = compare;
+exports.compare = compare;

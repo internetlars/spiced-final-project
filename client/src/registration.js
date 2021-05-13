@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import { Component } from "react";
 import axios from "./axios";
 
@@ -8,10 +9,10 @@ export default class Registration extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
+            // firstName: "",
+            // lastName: "",
+            // email: "",
+            // password: "",
         };
     }
     submit() {
@@ -48,7 +49,13 @@ export default class Registration extends React.Component {
                     </div>
                 )}
 
-                <form method="POST" className="registration_form">
+                <h3>Welcome to the Social Network.</h3>
+                <h4>
+                    Please add your credentials to become a member of this fine
+                    establishment.
+                </h4>
+
+                <form className="registration_form">
                     <input
                         name="firstName"
                         onChange={(e) => this.handleChange(e)}
@@ -77,8 +84,8 @@ export default class Registration extends React.Component {
                     <button onClick={() => this.submit()}>register</button>
                     <div>
                         <span>
-                            already registered?
-                            <a href="#">Login</a>
+                            or perhaps you have already registered?
+                            <Link to="/login">login</Link>
                         </span>
                     </div>
                 </form>

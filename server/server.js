@@ -4,6 +4,7 @@ const compression = require("compression");
 const path = require("path");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
+const { sendEmail } = require("./ses");
 const csurf = require("csurf");
 const { hash, compare } = require("../bc");
 const cookieSession = require("cookie-session");
@@ -66,10 +67,10 @@ app.post("/registration", (req, res) => {
                 res.json(result);
             })
             .catch(
-                (err) =>
+                (error) =>
                     console.log(
                         "Error thrown in registration POST route: ",
-                        err
+                        error
                     ),
                 res.json({
                     success: false,
@@ -79,25 +80,111 @@ app.post("/registration", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+    console.log("POST request to /login was made.");
     const { email, password } = req.body;
-    db.getUser(email, password).then((result) => {
-        compare(password, result.rows[0].hashedPassword)
+    console.log("req.body in login POST route is: ", req.body);
+    db.getUser(email).then((result) => {
+        console.log("result.rows: ", result.rows);
+        compare(password, result.rows[0].password_hash)
             .then((match) => {
                 if (match) {
                     req.session.userId = result.rows[0].id;
-                    res.json({
+                    res.status(200).json({
                         success: true,
                     });
                 } else {
-                    res.json({
+                    console.log("error thrown in compare in login post route!");
+                    res.status(500).json({
                         success: false,
                     });
                 }
             })
-            .catch((err) => {
-                console.log("Error in POST route of login: ", err);
+            .catch((error) => {
+                console.log("Error in POST route of login: ", error);
+                res.status(500).json({
+                    error: "Error logging in!",
+                });
             });
     });
+});
+
+//user first enters email in 1st display
+//getUser, then insertCode
+app.post("/password/reset/start", (req, res) => {
+    console.log("POST request password/reset/start");
+    db.getUser(req.body.email).then((result) => {
+        console.log("result in password/reset/start getUser is ", result);
+        if (result.rows.length > 0) {
+            const secretCode = cryptoRandomString({
+                length: 6,
+            });
+            const email = result.rows[0].email;
+            db.insertCode(secretCode, email)
+                .then(({ rows }) => {
+                    if (rows.length > 0) {
+                        sendEmail(
+                            rows[0].email,
+                            "Your verification code to reset your password is: ${rows[0].code}",
+                            "Your verification code"
+                        );
+                        res.status(200).json({
+                            success: "Verification success!",
+                        });
+                    } else {
+                        res.status(500).json({
+                            error: "Error caught in verification.",
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.log(
+                        "Error caught in password reset start post route: ",
+                        error
+                    );
+                    res.status(500).json({ error: "Error!" });
+                });
+        }
+    });
+});
+
+//user enters new code and new password
+//checkVerification, then updatePassword
+app.post("/password/reset/verify", (req, res) => {
+    console.log("POST request password/reset/verify");
+    const { email, password, code } = req.body;
+    console.log("req.body in verify post route is: ", req.body);
+    db.checkVerification(email)
+        .then((result) => {
+            if (result.rows[0].code === code) {
+                hash(password).then((hashedPassword) => {
+                    db.updatePassword(hashedPassword, email)
+                        .then(() => {
+                            res.status(200).json({
+                                success: "Password update successful.",
+                            });
+                        })
+                        .catch((error) => {
+                            console.log(
+                                "Error caught in verification POST route: ",
+                                error
+                            );
+                            res.status(500).json({
+                                error: "Error verifying password.",
+                            });
+                        });
+                });
+            } else {
+                res.status(500).json({
+                    error: "Invalid E-Mail",
+                });
+            }
+        })
+        .catch((error) => {
+            console.log("Error caught in checkVerification: ", error);
+            res.status(500).json({
+                error: "Error resetting password.",
+            });
+        });
 });
 
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...

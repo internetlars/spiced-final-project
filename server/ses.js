@@ -4,7 +4,7 @@ let secrets;
 if (process.env.NODE_ENV == "production") {
     secrets = process.env; // in prod the secrets are environment variables
 } else {
-    secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
+    secrets = require("../secrets.json"); // in dev they are in secrets.json which is listed in .gitignore
 }
 
 const ses = new aws.SES({
@@ -17,7 +17,7 @@ const ses = new aws.SES({
 module.exports.sendEmail = function (recipient, message, subject) {
     return ses
         .sendEmail({
-            Source: "Wood Quiver <wood.quiver@spicedling.email>",
+            Source: "Lars Braun <wood.quiver@spicedling.email>",
             Destination: {
                 ToAddresses: [recipient],
             },
