@@ -61,7 +61,7 @@ app.post("/registration", (req, res) => {
     hash(password).then((hashedPassword) => {
         console.log(hashedPassword);
         db.addUser(firstName, lastName, email, hashedPassword)
-            .then((result) => {
+            .then(({ result }) => {
                 const { id } = result.rows[0];
                 req.session.userId = id;
                 res.json(result);
@@ -83,29 +83,38 @@ app.post("/login", (req, res) => {
     console.log("POST request to /login was made.");
     const { email, password } = req.body;
     console.log("req.body in login POST route is: ", req.body);
-    db.getUser(email).then((result) => {
-        console.log("result.rows: ", result.rows);
-        compare(password, result.rows[0].password_hash)
-            .then((match) => {
-                if (match) {
-                    req.session.userId = result.rows[0].id;
-                    res.status(200).json({
-                        success: true,
-                    });
-                } else {
-                    console.log("error thrown in compare in login post route!");
+    db.getUser(email)
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+            compare(password, result.rows[0].password_hash)
+                .then((match) => {
+                    if (match) {
+                        req.session.userId = result.rows[0].id;
+                        res.json({
+                            success: true,
+                        });
+                    } else {
+                        console.log(
+                            "error thrown in compare in login post route!"
+                        );
+                        res.status(500).json({
+                            success: false,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.log("Error in POST route of login: ", error);
                     res.status(500).json({
-                        success: false,
+                        error: "Error logging in!",
                     });
-                }
-            })
-            .catch((error) => {
-                console.log("Error in POST route of login: ", error);
-                res.status(500).json({
-                    error: "Error logging in!",
                 });
+        })
+        .catch((error) => {
+            console.log("You are not insane", error);
+            res.status(500).json({
+                error: "Error in logging in.",
             });
-    });
+        });
 });
 
 //user first enters email in 1st display
