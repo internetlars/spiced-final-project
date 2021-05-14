@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
+import ResetPassword from "./passwordreset";
 
 export default class Login extends Component {
     constructor(props) {
@@ -67,6 +68,8 @@ export default class Login extends Component {
                     not a member yet?
                     <Link to="/">click here to Register!</Link>
                     <Link to="/passwordreset">Reset Password</Link>
+                    <Link to="/password/reset">Reset Password</Link>
+                    <ResetPassword></ResetPassword>
                 </span>
             </div>
         );

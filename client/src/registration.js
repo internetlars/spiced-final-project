@@ -55,40 +55,39 @@ export default class Registration extends React.Component {
                     establishment.
                 </h4>
 
-                <form className="registration_form">
-                    <input
-                        name="firstName"
-                        onChange={(e) => this.handleChange(e)}
-                        placeholder="first name"
-                        required
-                    />
-                    <input
-                        name="lastName"
-                        onChange={(e) => this.handleChange(e)}
-                        placeholder="last name"
-                        required
-                    />
-                    <input
-                        name="email"
-                        type="email"
-                        onChange={(e) => this.handleChange(e)}
-                        placeholder="email"
-                        required
-                    />
-                    <input
-                        name="pass"
-                        type="password"
-                        onChange={(e) => this.handleChange(e)}
-                        required
-                    />
-                    <button onClick={() => this.submit()}>register</button>
-                    <div>
-                        <span>
-                            or perhaps you have already registered?
-                            <Link to="/login">login</Link>
-                        </span>
-                    </div>
-                </form>
+                <input
+                    name="firstName"
+                    onChange={(e) => this.handleChange(e)}
+                    placeholder="first name"
+                    required
+                />
+                <input
+                    name="lastName"
+                    onChange={(e) => this.handleChange(e)}
+                    placeholder="last name"
+                    required
+                />
+                <input
+                    name="email"
+                    type="email"
+                    onChange={(e) => this.handleChange(e)}
+                    placeholder="email"
+                    required
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    onChange={(e) => this.handleChange(e)}
+                    required
+                />
+                <button onClick={() => this.submit()}>register</button>
+                <div>
+                    <span>
+                        or perhaps you have already registered?
+                        <Link to="/login">login</Link>
+                    </span>
+                </div>
             </div>
         );
     }

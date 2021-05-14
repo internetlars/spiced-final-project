@@ -23,13 +23,13 @@ export default class ResetPassword extends Component {
                         view: 2,
                     });
                 })
-                .catch((err) => {
+                .catch((error) => {
                     console.log(
                         "Error caught in if statement ResetPassword component: ",
-                        err
+                        error
                     );
                     this.setState = {
-                        err:
+                        error:
                             "There was an error resetting your password. Please try again.",
                     };
                 });
@@ -70,7 +70,7 @@ export default class ResetPassword extends Component {
                         required
                         onChange={(e) => this.handleChange(e)}
                     />
-                    <button type="submit" onClick={() => this.submit()}>
+                    <button type="button" onClick={() => this.submit()}>
                         submit
                     </button>
                 </div>

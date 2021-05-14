@@ -1,7 +1,10 @@
 import React from "react";
 //Part 5
 import Profile from "./profile";
+import Logo from "./logo";
+import Uploader from "./uploader";
 
+//must be a class component (needs both state and lifecycle components)
 export default class App extends React.Component {
     constructor() {
         super();
@@ -9,6 +12,14 @@ export default class App extends React.Component {
     }
     componentDidMount() {
         console.log("App just mounted");
+    }
+    toggleUploader() {
+        this.setState({
+            uploaderisVisible: !this.state.uploaderisVisible,
+        });
+    }
+    methodInApp(arg) {
+        console.log("arguemnt methodInApp go passed: ", arg);
     }
     render() {
         return (

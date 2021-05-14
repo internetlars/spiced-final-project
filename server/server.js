@@ -61,21 +61,15 @@ app.post("/registration", (req, res) => {
     hash(password).then((hashedPassword) => {
         console.log(hashedPassword);
         db.addUser(firstName, lastName, email, hashedPassword)
-            .then(({ result }) => {
-                const { id } = result.rows[0];
+            .then(({ rows }) => {
+                const { id } = rows[0];
                 req.session.userId = id;
-                res.json(result);
+                res.json({ success: true });
             })
-            .catch(
-                (error) =>
-                    console.log(
-                        "Error thrown in registration POST route: ",
-                        error
-                    ),
-                res.json({
-                    success: false,
-                })
-            );
+            .catch((error) => {
+                console.log("Error thrown in registration POST route: ", error);
+                res.json({ success: false });
+            });
     });
 });
 
@@ -133,7 +127,7 @@ app.post("/password/reset/start", (req, res) => {
                     if (rows.length > 0) {
                         sendEmail(
                             rows[0].email,
-                            "Your verification code to reset your password is: ${rows[0].code}",
+                            `Hey there! Your verification code to reset your password is: ${rows[0].code}`,
                             "Your verification code"
                         );
                         res.status(200).json({
