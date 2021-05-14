@@ -25,11 +25,11 @@ module.exports.getUser = (email) => {
 };
 
 // check verification code
-module.exports.checkVerification = (email) => {
+module.exports.checkVerificationCode = (email) => {
     const q = `
-    SELECT * FROM my_table
+    SELECT * FROM reset_codes
     WHERE email = $1 AND 
-    CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes',
+    CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
     `;
     const params = [email];
     return db.query(q, params);

@@ -156,7 +156,7 @@ app.post("/password/reset/verify", (req, res) => {
     console.log("POST request password/reset/verify");
     const { email, password, code } = req.body;
     console.log("req.body in verify post route is: ", req.body);
-    db.checkVerification(email)
+    db.checkVerificationCode(email)
         .then((result) => {
             if (result.rows[0].code === code) {
                 hash(password).then((hashedPassword) => {
