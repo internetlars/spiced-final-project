@@ -67,9 +67,7 @@ export default class Login extends Component {
                 <span>
                     not a member yet?
                     <Link to="/">click here to Register!</Link>
-                    <Link to="/passwordreset">Reset Password</Link>
                     <Link to="/password/reset">Reset Password</Link>
-                    <ResetPassword></ResetPassword>
                 </span>
             </div>
         );

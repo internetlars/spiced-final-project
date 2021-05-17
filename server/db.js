@@ -56,3 +56,21 @@ module.exports.updatePassword = (hashedPassword, email) => {
     const params = [hashedPassword, email];
     return db.query(q, params);
 };
+
+module.exports.uploadProfilePic = (fullUrl, userId) => {
+    const q = `
+    UPDATE users SET img_url = $1
+    WHERE id = $2
+    RETURNING *
+    `;
+    const params = [fullUrl, userId];
+    return db.query(q, params);
+};
+
+module.exports.getUserInfo = (userId) => {
+    const q = `
+    SELECT * FROM users WHERE id = $1
+    `;
+    const params = [userId];
+    return db.query(q, params);
+};

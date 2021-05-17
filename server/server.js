@@ -1,11 +1,18 @@
 const express = require("express");
 const app = express();
 const compression = require("compression");
-const path = require("path");
+// const path = require("path");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
 const csurf = require("csurf");
+const s3 = require("./s3");
+const { s3Url } = require("./config.json");
+
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+
 const { hash, compare } = require("../bc");
 const cookieSession = require("cookie-session");
 let cookieSecret;
@@ -38,6 +45,24 @@ app.use(compression());
 
 // serving our public directory
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
 
 //Welcome route
 app.get("/welcome", (req, res) => {
@@ -177,6 +202,7 @@ app.post("/password/reset/verify", (req, res) => {
                         });
                 });
             } else {
+                console.log("Check!");
                 res.status(500).json({
                     error: "Invalid E-Mail",
                 });
@@ -188,6 +214,28 @@ app.post("/password/reset/verify", (req, res) => {
                 error: "Error resetting password.",
             });
         });
+});
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("POST route to /upload");
+    console.log("req.body", req.body);
+    if (req.file) {
+        const { filename } = req.file;
+        const fullUrl = s3Url + filename;
+        console.log("req.session", req.session);
+        const { userId } = req.session;
+        db.uploadProfilePic(fullUrl, userId)
+            .then((result) => {
+                console.log("result.rows: ", result.rows);
+                res.json(result.rows[0]);
+            })
+            .catch((err) => {
+                console.log("Error in POST /upload", err);
+                res.status(500).json({
+                    error: "Error caught in /upload POST route.",
+                });
+            });
+    }
 });
 
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...
