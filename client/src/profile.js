@@ -18,7 +18,7 @@ export default function Profile(props) {
                         toggleUploader={props.toggleUploader}
                     />
                 </div>
-                <p>welcome to your profile, {props.first}</p>
+                <p>welcome to your profile, {props.firstName}</p>
 
                 <img
                     src={props.imgUrl}
