@@ -9,7 +9,8 @@ export default class ResetPassword extends Component {
             view: 1,
         };
     }
-    submit() {
+    submit(e) {
+        e.preventDefault();
         this.setState({
             error: null,
         });
@@ -93,7 +94,7 @@ export default class ResetPassword extends Component {
                         onChange={(e) => this.handleChange(e)}
                         // "{(e) => this.handleChange(e)}"
                     />
-                    <button type="submit" onClick={() => this.submit()}>
+                    <button type="submit" onClick={(e) => this.submit(e)}>
                         submit
                     </button>
                 </div>

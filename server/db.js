@@ -74,3 +74,14 @@ module.exports.getUserInfo = (userId) => {
     const params = [userId];
     return db.query(q, params);
 };
+
+module.exports.setBio = (bio, userId) => {
+    const q = `
+    UPDATE users
+    SET bio = $1
+    WHERE id = $2
+    RETURNING *
+    `;
+    const params = [bio, userId];
+    return db.query(q, params);
+};

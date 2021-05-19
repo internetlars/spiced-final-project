@@ -238,6 +238,36 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
+app.get("/user", (req, res) => {
+    console.log("GET request made to /user.");
+    db.getUserInfo(req.session.userId)
+        .then((result) => {
+            res.json(result.rows[0]);
+        })
+        .catch((error) => {
+            console.log("Error caught in GET route to /user: ", error);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+//db.setBio
+app.post("/updatebio", (req, res) => {
+    console.log("POST request made to /updatebio");
+    db.setBio(req.body.bio, req.session.userId)
+        .then((result) => {
+            console.log("result.rows[0] in /updatebio: ", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((error) => {
+            console.log("Error caught in /updatebio POST route: ", error);
+            res.json({
+                success: false,
+            });
+        });
+});
+
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...
 // never delete or comment this route out ever!
 app.get("*", function (req, res) {

@@ -13,20 +13,17 @@ export default class Uploader extends React.Component {
         console.log("Uploader just mounted");
         console.log("props in Uploader", this.props);
     }
-    methodInUploader() {
-        this.props.methodInApp("Whoaaaaaa");
-    }
     handleChange({ target }) {
         console.log("handleChange triggered: ", target.value);
         this.setState({
-            [target.name]: target.value,
+            [target.name]: target.files[0],
         });
     }
     submitFile(e) {
         console.log("Submit pressed in uploader component");
         e.preventDefault();
         var formData = new FormData();
-        formData.append("file", this.file);
+        formData.append("file", this.state.file);
         axios
             .post("/upload", formData)
             .then(({ data }) => {
@@ -40,13 +37,6 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <>
-                {/* <h2>Hi I am the uploader ⏫ </h2>
-                <h2 onClick={() => this.methodInUploader()}>
-                    {" "}
-                    🔘 Click here to run the method in Uploader that triggers
-                    the one in app to run 🏃‍♀️
-                </h2> */}
-
                 <div className="uploader-container">
                     <span
                         onClick={this.props.toggleUploader}
@@ -54,6 +44,7 @@ export default class Uploader extends React.Component {
                     >
                         X
                     </span>
+                    <h3>upload a profile pic</h3>
                     <div>
                         <input
                             type="file"
@@ -66,6 +57,12 @@ export default class Uploader extends React.Component {
                             className="submit-button"
                         >
                             submit
+                        </button>
+                        <button
+                            className="toggleuploader-button"
+                            onClick={this.props.toggleUploader}
+                        >
+                            cancel
                         </button>
                     </div>
                 </div>

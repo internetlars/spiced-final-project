@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "Work Sans", sans-serif;
 }
 
 body {
@@ -13,4 +14,26 @@ body {
     border: black solid 2px;
     width: 50px;
     height: 50px;
+}
+
+.profilepic {
+    border: solid black 0.5px;
+    height: 200px;
+    width: 200px;
+}
+
+.uploader-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid blue 2px;
+}
+
+.profile-container {
+    border: blueviolet solid 2px;
+}
+
+.bio-container {
+    border: dotted 2px slateblue;
 }
