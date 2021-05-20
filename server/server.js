@@ -239,7 +239,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.get("/user", (req, res) => {
-    console.log("GET request made to /user.");
+    // console.log("GET request made to /user.");
     db.getUserInfo(req.session.userId)
         .then((result) => {
             res.json(result.rows[0]);
@@ -266,6 +266,41 @@ app.post("/updatebio", (req, res) => {
                 success: false,
             });
         });
+});
+
+//cannot be /user/:id!!
+app.get("/other-user/:id", (req, res) => {
+    console.log("GET request made to other-user/:id");
+    const { id } = req.params;
+    const { userId } = req.session;
+    console.log("id in other-user GET: ", id);
+    console.log("userId in other-user GET: ", userId);
+    if (parseInt(id) === userId) {
+        res.json({
+            error: "UserId and Id are the same",
+        });
+    } else {
+        db.getOtherUser(id)
+            .then((result) => {
+                // console.log("result getOtherUser: ", result);
+                if (result.rows.length === 0) {
+                    res.json({
+                        error: "User is trying to enter a no valid url",
+                    });
+                } else {
+                    res.json(result.rows[0]);
+                }
+            })
+            .catch((err) => {
+                console.log("Error in GET /other-user/:id", err);
+            });
+    }
+});
+
+app.get("/logout", (req, res) => {
+    console.log("logout route requested.");
+    req.session = null;
+    res.redirect("/");
 });
 
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...
