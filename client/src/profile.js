@@ -1,6 +1,5 @@
 //we don't need to use state or lifecycle method for Profile.js
 // App -> Profile -> ProfilePic
-// import ProfilePic from ""
 import BioEditor from "./bio";
 import ProfilePic from "./profilepic";
 

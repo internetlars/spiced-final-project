@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const compression = require("compression");
-// const path = require("path");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
@@ -74,11 +73,6 @@ app.get("/welcome", (req, res) => {
     }
 });
 
-// app.post("/welcome", function (req, res) => {
-//     console.log("POST request was made to welcome route.");
-//     const {firstName, lastName, email, password}
-// })
-
 //Registration route
 app.post("/registration", (req, res) => {
     const { firstName, lastName, email, password } = req.body;
@@ -125,6 +119,7 @@ app.post("/login", (req, res) => {
                     console.log("Error in POST route of login: ", error);
                     res.status(500).json({
                         error: "Error logging in!",
+                        success: false,
                     });
                 });
         })
@@ -132,6 +127,7 @@ app.post("/login", (req, res) => {
             console.log("You are not insane", error);
             res.status(500).json({
                 error: "Error in logging in.",
+                success: false,
             });
         });
 });
@@ -161,6 +157,7 @@ app.post("/password/reset/start", (req, res) => {
                     } else {
                         res.status(500).json({
                             error: "Error caught in verification.",
+                            success: false,
                         });
                     }
                 })
@@ -170,6 +167,7 @@ app.post("/password/reset/start", (req, res) => {
                         error
                     );
                     res.status(500).json({ error: "Error!" });
+                    success: false,
                 });
         }
     });
@@ -198,6 +196,7 @@ app.post("/password/reset/verify", (req, res) => {
                             );
                             res.status(500).json({
                                 error: "Error verifying password.",
+                                success: false,
                             });
                         });
                 });
@@ -205,6 +204,7 @@ app.post("/password/reset/verify", (req, res) => {
                 console.log("Check!");
                 res.status(500).json({
                     error: "Invalid E-Mail",
+                    success: false,
                 });
             }
         })
@@ -212,6 +212,7 @@ app.post("/password/reset/verify", (req, res) => {
             console.log("Error caught in checkVerification: ", error);
             res.status(500).json({
                 error: "Error resetting password.",
+                success: false,
             });
         });
 });
@@ -234,6 +235,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                 console.log("Error in POST /upload", err);
                 res.status(500).json({
                     error: "Error caught in /upload POST route.",
+                    success: false,
                 });
             });
     }
@@ -281,6 +283,7 @@ app.get("/other-user/:id", (req, res) => {
     if (parseInt(id) === userId) {
         res.json({
             error: "UserId and Id are identical!",
+            success: false,
         });
     } else {
         db.getOtherUser(id)
@@ -294,8 +297,11 @@ app.get("/other-user/:id", (req, res) => {
                     res.json(result.rows[0]);
                 }
             })
-            .catch((err) => {
-                console.log("Error in GET /other-user/:id", err);
+            .catch((error) => {
+                console.log("Error in GET /other-user/:id", error);
+                res.json({
+                    success: false,
+                });
             });
     }
 });
@@ -321,6 +327,9 @@ app.get("/find/users", (req, res) => {
         })
         .catch((error) => {
             console.log("Error in GET /find/users", error);
+            res.json({
+                success: false,
+            });
         });
 });
 

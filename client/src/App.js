@@ -7,7 +7,6 @@ import ProfilePic from "./profilepic";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
-// import { response } from "express";
 
 //must be a class component (needs both state and lifecycle components)
 export default class App extends React.Component {
