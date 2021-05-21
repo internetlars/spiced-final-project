@@ -216,6 +216,7 @@ app.post("/password/reset/verify", (req, res) => {
         });
 });
 
+//profile pic upload
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("POST route to /upload");
     console.log("req.body", req.body);
@@ -238,6 +239,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
+//get user
 app.get("/user", (req, res) => {
     // console.log("GET request made to /user.");
     db.getUserInfo(req.session.userId)
@@ -252,7 +254,7 @@ app.get("/user", (req, res) => {
         });
 });
 
-//db.setBio
+//update bio
 app.post("/updatebio", (req, res) => {
     console.log("POST request made to /updatebio");
     db.setBio(req.body.bio, req.session.userId)
@@ -268,6 +270,7 @@ app.post("/updatebio", (req, res) => {
         });
 });
 
+//other profiles
 //cannot be /user/:id!!
 app.get("/other-user/:id", (req, res) => {
     console.log("GET request made to other-user/:id");
@@ -277,7 +280,7 @@ app.get("/other-user/:id", (req, res) => {
     console.log("userId in other-user GET: ", userId);
     if (parseInt(id) === userId) {
         res.json({
-            error: "UserId and Id are the same",
+            error: "UserId and Id are identical!",
         });
     } else {
         db.getOtherUser(id)
@@ -285,7 +288,7 @@ app.get("/other-user/:id", (req, res) => {
                 // console.log("result getOtherUser: ", result);
                 if (result.rows.length === 0) {
                     res.json({
-                        error: "User is trying to enter a no valid url",
+                        error: "Error in retrieving users.",
                     });
                 } else {
                     res.json(result.rows[0]);
@@ -297,6 +300,31 @@ app.get("/other-user/:id", (req, res) => {
     }
 });
 
+//search bar
+app.get("/find/users/:id", (req, res) => {
+    console.log("GET request made to find/users/:id.");
+    const { id } = req.params;
+    db.getOtherUser(id)
+        .then((result) => {
+            res.json(result.rows);
+        })
+        .catch((error) => {
+            console.log("Error caught in /find/users/:id: ", error);
+        });
+});
+
+app.get("/find/users", (req, res) => {
+    console.log("GET request made to /find/users.");
+    db.getNewestUsers()
+        .then((result) => {
+            res.json(result.rows);
+        })
+        .catch((error) => {
+            console.log("Error in GET /find/users", error);
+        });
+});
+
+// logout
 app.get("/logout", (req, res) => {
     console.log("logout route requested.");
     req.session = null;
