@@ -16,9 +16,9 @@ export default function FriendshipButton({ id }) {
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await axios.get(`/friends/${id}`);
+                const { data } = await axios.get(`/connection/${id}`);
                 console.log("data in useEffect Friendshipbutton: ", data);
-                setButtonText(data.buttonText);
+                setButtonText(data.dynamicButtonText);
             } catch (error) {
                 console.log(
                     "Error caught in useEffect hook for friendship button: ",
@@ -31,7 +31,7 @@ export default function FriendshipButton({ id }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post("/friends", {
+            const { data } = await axios.post("/connection", {
                 dynamicButtonText: buttonText,
                 viewedUser: id,
             });
@@ -45,6 +45,7 @@ export default function FriendshipButton({ id }) {
         <>
             <button onClick={handleSubmit} className="btn">
                 {/* button will be dynamically set */}
+                text
                 {buttonText}
             </button>
         </>

@@ -155,6 +155,7 @@ app.post("/password/reset/start", (req, res) => {
     console.log("POST request password/reset/start");
     db.getUser(req.body.email).then((result) => {
         console.log("result in password/reset/start getUser is ", result);
+        console.log("result.rows: ", result.rows);
         if (result.rows.length > 0) {
             const secretCode = cryptoRandomString({
                 length: 6,
@@ -336,17 +337,18 @@ app.get("/find/users/:id", (req, res) => {
         });
 });
 
-app.get("/find/users", (req, res) => {
+app.get("/find/users.json", (req, res) => {
     console.log("GET request made to /find/users.");
     db.getNewestUsers()
         .then((result) => {
+            console.log("result.rows: ", result.rows);
             res.json(result.rows);
         })
         .catch((error) => {
             console.log("Error in GET /find/users", error);
-            res.json({
-                success: false,
-            });
+            // res.json({
+            //     success: false,
+            // });
         });
 });
 
@@ -377,6 +379,44 @@ app.get("/connection/:viewedUser", async (req, res) => {
                 buttonText: "Deny friend request",
             });
         }
+    }
+});
+
+app.post("/connection", async (req, res) => {
+    const loggedInUser = req.session.userId;
+    console.log("req.session.userId: ", req.session.userId);
+    const { buttonText, viewedUser } = req.body;
+    console.log("loggedInuser : ", req.session.userId);
+    console.log("req.body: ", req.body);
+
+    try {
+        if (buttonText === "Add Friend") {
+            await db.beFriend(loggedInUser, viewedUser);
+            return res.json({
+                buttonText: "Cancel request",
+            });
+        }
+        if (buttonText === "Accept request") {
+            await db.updateConnection(loggedInUser, viewedUser);
+            return res.json({
+                buttonText: "Unfriend",
+            });
+        }
+        if (
+            buttonText === "Cancel request" ||
+            buttonText === "Unfriend" ||
+            buttonText === "Decline request"
+        ) {
+            await db.unFriend(loggedInUser, viewedUser);
+            return req.json({
+                buttonText: "Add Friend",
+            });
+        }
+    } catch (error) {
+        console.log("Error in app.post /friendship route: ", error);
+        return res.json({
+            error: "Error caught in /connection POST.",
+        });
     }
 });
 

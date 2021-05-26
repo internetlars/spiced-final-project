@@ -120,23 +120,23 @@ module.exports.connection = (loggedInUser, viewedUser) => {
     return db.query(q, params);
 };
 
-module.exports.insertConnection = (loggedInUser, otherUser) => {
+module.exports.beFriend = (loggedInUser, viewedUser) => {
     return db.query(
         `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1, $2) RETURNING *`,
-        [loggedInUser, otherUser]
+        [loggedInUser, viewedUser]
     );
 };
 
-module.exports.updateConnection = (loggedInUser, otherUser) => {
+module.exports.updateConnection = (loggedInUser, viewedUser) => {
     return db.query(
         `UPDATE friendships SET accepted = true WHERE recipient_id=$1 AND sender_id=$2 RETURNING *`,
-        [loggedInUser, otherUser]
+        [loggedInUser, viewedUser]
     );
 };
 
-module.exports.cancelConnection = (loggedInUser, otherUser) => {
+module.exports.unFriend = (loggedInUser, viewedUser) => {
     return db.query(
         `DELETE FROM friendships WHERE (recipient_id=$1 AND sender_id=$2) OR (recipient_id=$2 AND sender_id=$1)`,
-        [loggedInUser, otherUser]
+        [loggedInUser, viewedUser]
     );
 };

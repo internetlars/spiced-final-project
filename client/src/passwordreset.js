@@ -71,7 +71,7 @@ export default class ResetPassword extends Component {
                         required
                         onChange={(e) => this.handleChange(e)}
                     />
-                    <button type="button" onClick={() => this.submit()}>
+                    <button type="button" onClick={(e) => this.submit(e)}>
                         submit
                     </button>
                 </div>

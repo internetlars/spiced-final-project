@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "./axios";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
-    const [users, setUsers] = useState([]);
-    const [inputField, setInputField] = useState("");
+    const [users, setUsers] = useState("");
+    const [inputField, setInputField] = useState([]);
 
     useEffect(() => {
         console.log("useEffect in FindPeople triggered 1!");
         axios
-            .get("/find/users")
+            .get("/find/users.json")
             .then((data) => {
                 console.log("data.data in axios FindPeople: ", data.data);
                 setUsers(data.data);
@@ -25,15 +25,14 @@ export default function FindPeople() {
         let ignore = false;
         (async () => {
             try {
-                const { data } = await axios
-                    .get(`/find/users/${inputField}`)
-                    .catch((error) => {
-                        console.log("Error caught in useEffect 2: ", error);
-                    });
+                const { data } = await axios.post("/find/users.json/");
+                // .catch((error) => {
+                //     console.log("Error caught in useEffect 2: ", error);
+                // });
                 if (!ignore) {
                     setUsers(data);
                 } else {
-                    setUsers([]);
+                    setUsers(data);
                 }
             } catch (error) {
                 console.log("Error caught in useEffect findPeople: ", error);
@@ -48,6 +47,7 @@ export default function FindPeople() {
         setInputField(target.value);
     };
 
+    console.log("users: ", users);
     return (
         <div className="search-container">
             <h3>Search for other users</h3>
@@ -57,26 +57,22 @@ export default function FindPeople() {
                     users.map((user, index) => {
                         return (
                             <div key={index}>
-                                <img
-                                    src={
-                                        user.img_url || "defaultprofilepic.jpeg"
-                                    }
-                                />
+                                <Link to={`/user/${user.id}`} key={index}>
+                                    <img
+                                        src={
+                                            user.img_url ||
+                                            "defaultprofilepic.jpeg"
+                                        }
+                                    />
 
-                                <p key={user.firstName}>
-                                    {user.firstName} {user.lastName}
-                                </p>
+                                    <p key={user.first_name}>
+                                        {user.first_name} {user.last_name}
+                                    </p>
+                                </Link>
                             </div>
                         );
                     })}
             </ul>
-            {/* ... */}
-
-            {users.map((user) => (
-                <div key={user.id}>{/* ... */}</div>
-            ))}
-
-            {/* ... */}
         </div>
     );
 }
