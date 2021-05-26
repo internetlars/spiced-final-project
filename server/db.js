@@ -105,3 +105,38 @@ module.exports.getNewestUsers = () => {
     const params = [];
     return db.query(q, params);
 };
+
+module.exports.searchForUserInformation = (inputField) => {
+    const q = `SELECT id, first_name, last_name, img_url FROM users WHERE first_name ILIKE $1 LIMIT 8`;
+    const params = [`${inputField}%`];
+    return db.query(q, params);
+};
+
+module.exports.connection = (loggedInUser, viewedUser) => {
+    const q = `
+    SELECT * FROM friendships WHERE (recipient_id = $1 AND sender_id = $2) OR (recipient_id = $2 AND sender_id = $1);
+    `;
+    const params = [loggedInUser, viewedUser];
+    return db.query(q, params);
+};
+
+module.exports.insertConnection = (loggedInUser, otherUser) => {
+    return db.query(
+        `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1, $2) RETURNING *`,
+        [loggedInUser, otherUser]
+    );
+};
+
+module.exports.updateConnection = (loggedInUser, otherUser) => {
+    return db.query(
+        `UPDATE friendships SET accepted = true WHERE recipient_id=$1 AND sender_id=$2 RETURNING *`,
+        [loggedInUser, otherUser]
+    );
+};
+
+module.exports.cancelConnection = (loggedInUser, otherUser) => {
+    return db.query(
+        `DELETE FROM friendships WHERE (recipient_id=$1 AND sender_id=$2) OR (recipient_id=$2 AND sender_id=$1)`,
+        [loggedInUser, otherUser]
+    );
+};

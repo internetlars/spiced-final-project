@@ -37,3 +37,13 @@ body {
 .bio-container {
     border: dotted 2px slateblue;
 }
+
+.search-container {
+    border: springgreen solid 2px;
+}
+
+.chat-message-container {
+    height: 350px;
+    width: 500px;
+    overflow-y: auto;
+}

@@ -1,19 +1,35 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "./axios";
+// import { Link } from "react-router-dom";
 
 export default function FindPeople() {
-    const [users, setUsers] = useState("");
-    const [inputField, setInputField] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [inputField, setInputField] = useState("");
 
     useEffect(() => {
-        console.log("useEffect in findPeople triggered");
+        console.log("useEffect in FindPeople triggered 1!");
+        axios
+            .get("/find/users")
+            .then((data) => {
+                console.log("data.data in axios FindPeople: ", data.data);
+                setUsers(data.data);
+            })
+            .catch((error) =>
+                console.log("Error caught in FindPeople hook", error)
+            );
+    }, []);
+
+    useEffect(() => {
+        console.log("useEffect in FindPeople triggered 2!");
         let ignore = false;
         (async () => {
             try {
-                const { data } = await axios.post("/find/users.json", {
-                    inputField,
-                });
+                const { data } = await axios
+                    .get(`/find/users/${inputField}`)
+                    .catch((error) => {
+                        console.log("Error caught in useEffect 2: ", error);
+                    });
                 if (!ignore) {
                     setUsers(data);
                 } else {
@@ -35,7 +51,7 @@ export default function FindPeople() {
     return (
         <div className="search-container">
             <h3>Search for other users</h3>
-            <input onChange={onChange} />
+            <input onChange={onChange} placeholder="find a user" />
             <ul>
                 {users &&
                     users.map((user, index) => {

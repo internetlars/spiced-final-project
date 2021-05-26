@@ -1,6 +1,7 @@
 // import { response } from "express";
 import { Component } from "react";
 import axios from "./axios";
+import FriendshipButton from "./FriendshipButton";
 
 export default class OtherProfile extends Component {
     constructor() {
@@ -34,7 +35,7 @@ export default class OtherProfile extends Component {
         return (
             <div className="profile-container">
                 {this.state && <p>User: {this.props.match.params.id}</p>}
-                <h2>Other Profile</h2>
+                {/* <h2>Other Profile</h2> */}
 
                 <img
                     className="profile-pic"
@@ -45,6 +46,8 @@ export default class OtherProfile extends Component {
                     {this.state.firstName} {this.state.lastName}
                 </h3>
                 <p>{this.state.bio}</p>
+                {/* render friendshipbutton here */}
+                <FriendshipButton viewedUser={this.props.match.params.id} />
             </div>
         );
     }

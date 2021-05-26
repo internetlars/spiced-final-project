@@ -8,6 +8,12 @@ const csurf = require("csurf");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -21,12 +27,23 @@ if (process.env.COOKIE_SECRET) {
     cookieSecret = require("../secrets.json").COOKIE_SECRET;
 }
 
-app.use(
-    cookieSession({
-        secret: cookieSecret,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: cookieSecret,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
+
+// const cookieSession = require("cookie-session");
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 app.use(function (req, res, next) {
@@ -157,7 +174,7 @@ app.post("/password/reset/start", (req, res) => {
                     } else {
                         res.status(500).json({
                             error: "Error caught in verification.",
-                            success: false,
+                            // success: false,
                         });
                     }
                 })
@@ -167,7 +184,7 @@ app.post("/password/reset/start", (req, res) => {
                         error
                     );
                     res.status(500).json({ error: "Error!" });
-                    success: false,
+                    // success: false,
                 });
         }
     });
@@ -310,7 +327,7 @@ app.get("/other-user/:id", (req, res) => {
 app.get("/find/users/:id", (req, res) => {
     console.log("GET request made to find/users/:id.");
     const { id } = req.params;
-    db.getOtherUser(id)
+    db.searchForUserInformation(id)
         .then((result) => {
             res.json(result.rows);
         })
@@ -333,6 +350,36 @@ app.get("/find/users", (req, res) => {
         });
 });
 
+//friend requests
+app.get("/connection/:viewedUser", async (req, res) => {
+    const loggedInUser = req.session.userId;
+    console.log("loggedinUser in friendship GET route: ", req.session.userId);
+    const { viewedUser } = req.params;
+    const { rows } = await db.connection(loggedInUser, viewedUser);
+
+    if (rows.length === 0) {
+        return res.status(200).json({
+            buttonText: "Add friend",
+        });
+    }
+    if (rows[0].accepted) {
+        return res.status(200).json({
+            buttonText: "Unfriend",
+        });
+    }
+    if (!rows[0].accepted) {
+        if (rows[0].recipient_id === loggedInUser) {
+            return res.status(200).json({
+                buttonText: "Accept friend request",
+            });
+        } else {
+            return res.status(200).json({
+                buttonText: "Deny friend request",
+            });
+        }
+    }
+});
+
 // logout
 app.get("/logout", (req, res) => {
     console.log("logout route requested.");
@@ -351,6 +398,18 @@ app.get("*", function (req, res) {
 });
 
 // no specific reason why we switched port to 3001....
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("Zuckerberg is listening.");
+});
+
+//sockets will work for users only if they are logged in, otherwise they are disconnected
+io.on("connection", function (socket) {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+    console.log("userId in sockets: ", userId);
+
+    /* ... */
 });

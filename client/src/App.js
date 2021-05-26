@@ -7,13 +7,14 @@ import ProfilePic from "./profilepic";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
+// import FriendshipButton from "./FriendshipButton";
 
 //must be a class component (needs both state and lifecycle components)
 export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            uploaderIsVisible: true,
+            uploaderIsVisible: false,
         };
         this.toggleUploader = this.toggleUploader.bind(this);
         this.updateProfilePic = this.updateProfilePic.bind(this);
@@ -52,7 +53,7 @@ export default class App extends React.Component {
             <>
                 <div>
                     <header>
-                        <h1>hello i am App</h1>
+                        {/* <h1>hello i am App</h1> */}
                         <ProfilePic
                             firstName={this.state.firstName}
                             lastName={this.state.lastName}
@@ -85,6 +86,7 @@ export default class App extends React.Component {
                             />
                             {/* <Route path="/user/:id" component={OtherProfile} /> */}
                             <Route
+                                exact
                                 path="/user/:id"
                                 render={(props) => (
                                     <OtherProfile
@@ -96,6 +98,10 @@ export default class App extends React.Component {
                             />
                             {/* route to search  */}
                             <Route path="/find/users" component={FindPeople} />
+                            <Route
+                                path="/find/users:id"
+                                component={OtherProfile}
+                            />
                         </div>
                     </BrowserRouter>
 
