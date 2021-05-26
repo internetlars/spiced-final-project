@@ -112,6 +112,7 @@ module.exports.searchForUserInformation = (inputField) => {
     return db.query(q, params);
 };
 
+//8
 module.exports.connection = (loggedInUser, viewedUser) => {
     const q = `
     SELECT * FROM friendships WHERE (recipient_id = $1 AND sender_id = $2) OR (recipient_id = $2 AND sender_id = $1);
@@ -121,6 +122,7 @@ module.exports.connection = (loggedInUser, viewedUser) => {
 };
 
 module.exports.beFriend = (loggedInUser, viewedUser) => {
+    console.log("Hello!");
     return db.query(
         `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1, $2) RETURNING *`,
         [loggedInUser, viewedUser]
@@ -138,5 +140,19 @@ module.exports.unFriend = (loggedInUser, viewedUser) => {
     return db.query(
         `DELETE FROM friendships WHERE (recipient_id=$1 AND sender_id=$2) OR (recipient_id=$2 AND sender_id=$1)`,
         [loggedInUser, viewedUser]
+    );
+};
+
+//9
+module.exports.retrieveFriendsAndWannabees = (userId) => {
+    return db.query(
+        `SELECT users.id, first_name, last_name, img_url, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
+    `,
+        [userId]
     );
 };

@@ -79,7 +79,7 @@ export default class App extends React.Component {
                                             "defaultprofilepic.jpeg"
                                         }
                                         bio={this.state.bio}
-                                        setBio={this.setBio}
+                                        setBio={(bio) => this.setBio(bio)}
                                         toggleUploader={this.toggleUploader}
                                     />
                                 )}

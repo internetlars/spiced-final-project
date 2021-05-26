@@ -23,7 +23,7 @@ export default function Profile(props) {
                     src={props.imgUrl}
                     alt={`${props.firstName} ${props.lastName}`}
                 />
-                <BioEditor bio={props.bio} />
+                <BioEditor setBio={props.setBio} bio={props.bio} />
             </div>
         </div>
     );

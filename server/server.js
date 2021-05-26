@@ -391,7 +391,7 @@ app.post("/connection", async (req, res) => {
     console.log("req.body: ", req.body);
 
     try {
-        if (dynamicButtonText === "Add Friend") {
+        if (dynamicButtonText === "Add friend") {
             await db.beFriend(loggedInUser, viewedUser);
             return res.json({
                 dynamicButtonText: "Cancel request",
@@ -410,7 +410,7 @@ app.post("/connection", async (req, res) => {
         ) {
             await db.unFriend(loggedInUser, viewedUser);
             return req.json({
-                dynamicButtonText: "Add Friend",
+                dynamicButtonText: "Add friend",
             });
         }
     } catch (error) {
@@ -418,6 +418,16 @@ app.post("/connection", async (req, res) => {
         return res.json({
             error: "Error caught in /connection POST.",
         });
+    }
+});
+
+app.get("/friendrequests.json", async (req, res) => {
+    const { userId } = req.session;
+    try {
+        const { rows } = await db.retrieveFriendsAndWannabees(userId);
+        res.json(rows);
+    } catch (error) {
+        console.log("Error caught in friendrequests GET route: ", error);
     }
 });
 
