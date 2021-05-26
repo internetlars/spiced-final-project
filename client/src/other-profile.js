@@ -2,6 +2,7 @@
 import { Component } from "react";
 import axios from "./axios";
 import FriendshipButton from "./FriendshipButton";
+// import { Link } from "react-router-dom";
 
 export default class OtherProfile extends Component {
     constructor() {
@@ -47,7 +48,9 @@ export default class OtherProfile extends Component {
                 </h3>
                 <p>{this.state.bio}</p>
                 {/* render friendshipbutton here */}
-                <FriendshipButton viewedUser={this.props.match.params.id} />
+                {/* <Link to={"/find/users.json/"}>Search for others</Link> */}
+                <br></br>
+                <FriendshipButton id={this.props.match.params.id} />
             </div>
         );
     }

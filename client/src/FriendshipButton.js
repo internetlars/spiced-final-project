@@ -41,13 +41,29 @@ export default function FriendshipButton({ id }) {
         }
     };
 
+    const handleDecline = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post("/connection", {
+                dynamicButtonText: "Decline friend request",
+                viewedUser: id,
+            });
+            setButtonText("Add as a friend");
+        } catch (error) {
+            console.log("Error in Decline: ", error);
+        }
+    };
+
     return (
         <>
             <button onClick={handleSubmit} className="btn">
                 {/* button will be dynamically set */}
-                text
+                {/* OOO */}
                 {buttonText}
             </button>
+            {buttonText === "Accept" && (
+                <button onClick={handleDecline}>Decline friend request</button>
+            )}
         </>
     );
 }

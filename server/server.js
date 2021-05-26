@@ -357,26 +357,27 @@ app.get("/connection/:viewedUser", async (req, res) => {
     const loggedInUser = req.session.userId;
     console.log("loggedinUser in friendship GET route: ", req.session.userId);
     const { viewedUser } = req.params;
+    console.log("req.params: ", req.params);
     const { rows } = await db.connection(loggedInUser, viewedUser);
 
     if (rows.length === 0) {
         return res.status(200).json({
-            buttonText: "Add friend",
+            dynamicButtonText: "Add friend",
         });
     }
     if (rows[0].accepted) {
         return res.status(200).json({
-            buttonText: "Unfriend",
+            dynamicButtonText: "Unfriend",
         });
     }
     if (!rows[0].accepted) {
         if (rows[0].recipient_id === loggedInUser) {
             return res.status(200).json({
-                buttonText: "Accept friend request",
+                dynamicButtonText: "Accept",
             });
         } else {
             return res.status(200).json({
-                buttonText: "Deny friend request",
+                dynamicButtonText: "Cancel friend request",
             });
         }
     }
@@ -385,31 +386,31 @@ app.get("/connection/:viewedUser", async (req, res) => {
 app.post("/connection", async (req, res) => {
     const loggedInUser = req.session.userId;
     console.log("req.session.userId: ", req.session.userId);
-    const { buttonText, viewedUser } = req.body;
+    const { dynamicButtonText, viewedUser } = req.body;
     console.log("loggedInuser : ", req.session.userId);
     console.log("req.body: ", req.body);
 
     try {
-        if (buttonText === "Add Friend") {
+        if (dynamicButtonText === "Add Friend") {
             await db.beFriend(loggedInUser, viewedUser);
             return res.json({
-                buttonText: "Cancel request",
+                dynamicButtonText: "Cancel request",
             });
         }
-        if (buttonText === "Accept request") {
+        if (dynamicButtonText === "Accept") {
             await db.updateConnection(loggedInUser, viewedUser);
             return res.json({
-                buttonText: "Unfriend",
+                dynamicButtonText: "Unfriend",
             });
         }
         if (
-            buttonText === "Cancel request" ||
-            buttonText === "Unfriend" ||
-            buttonText === "Decline request"
+            dynamicButtonText === "Cancel request" ||
+            dynamicButtonText === "Unfriend" ||
+            dynamicButtonText === "Decline request"
         ) {
             await db.unFriend(loggedInUser, viewedUser);
             return req.json({
-                buttonText: "Add Friend",
+                dynamicButtonText: "Add Friend",
             });
         }
     } catch (error) {
