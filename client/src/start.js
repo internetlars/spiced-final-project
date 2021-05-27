@@ -22,5 +22,6 @@ const elem = (
 if (location.pathname == "/welcome") {
     ReactDOM.render(<Welcome />, document.querySelector("main"));
 } else {
+    init(store);
     ReactDOM.render(elem, document.querySelector("main"));
 }

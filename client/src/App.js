@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
+import Chat from "./chat";
 // import FriendshipButton from "./FriendshipButton";
 
 //must be a class component (needs both state and lifecycle components)
@@ -107,6 +108,7 @@ export default class App extends React.Component {
                                 path="/friendrequests"
                                 component={Friends}
                             ></Route>
+                            <Route path="/chat" component={Chat}></Route>
                         </div>
                     </BrowserRouter>
 

@@ -42,8 +42,23 @@ body {
     border: springgreen solid 2px;
 }
 
+.chat-container {
+    border: solid rebeccapurple 1px;
+}
+
 .chat-message-container {
     height: 350px;
     width: 500px;
     overflow-y: auto;
+    background-color: royalblue;
+}
+
+.anothercontainerinchat {
+    border: silver dotted 1px;
+    color: black;
+}
+
+.chat-icon {
+    height: 40px;
+    width: 40px;
 }

@@ -478,7 +478,7 @@ io.on("connection", function (socket) {
 
         try {
             const result = await db.addChatMessage(message, userId);
-            const { rows } = await db.getUser(userId);
+            const { rows } = await db.getUserInfo(userId);
             console.log("rows in chat socket: ", rows);
             const chatData = {
                 sender_id: rows[0].id,
