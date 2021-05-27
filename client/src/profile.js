@@ -8,22 +8,31 @@ export default function Profile(props) {
     return (
         <div>
             <div className="profile-container">
-                <h1>Profile Component</h1>
                 <div className="profilepic-container">
-                    <ProfilePic
+                    {/* <ProfilePic
                         firstName={props.firstName}
                         lastName={props.lastName}
                         imgUrl={props.imgUrl || "defaultprofilepic.jpeg"}
                         toggleUploader={props.toggleUploader}
-                    />
+                    /> */}
                 </div>
-                <p>welcome to your profile, {props.firstName}</p>
 
-                <img
-                    src={props.imgUrl}
-                    alt={`${props.firstName} ${props.lastName}`}
-                />
-                <BioEditor setBio={props.setBio} bio={props.bio} />
+                <p>
+                    Welcome to your profile,{" "}
+                    <span className="profile-name">{props.firstName}</span>!
+                </p>
+                <div className="profileinfo-container">
+                    {" "}
+                    <img
+                        className="profileinfo-img"
+                        src={props.imgUrl}
+                        alt={`${props.firstName} ${props.lastName}`}
+                    />
+                    <h4>
+                        {props.firstName} {props.lastName}
+                    </h4>
+                    <BioEditor setBio={props.setBio} bio={props.bio} />
+                </div>
             </div>
         </div>
     );

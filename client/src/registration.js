@@ -48,45 +48,63 @@ export default class Registration extends React.Component {
                         Oops! Something seems to have gone wrong.
                     </div>
                 )}
-
-                <h3>Welcome to the Social Network.</h3>
-                <h4>
-                    Please add your credentials to become a member of this fine
-                    establishment.
-                </h4>
-
-                <input
-                    name="firstName"
-                    onChange={(e) => this.handleChange(e)}
-                    placeholder="first name"
-                    required
-                />
-                <input
-                    name="lastName"
-                    onChange={(e) => this.handleChange(e)}
-                    placeholder="last name"
-                    required
-                />
-                <input
-                    name="email"
-                    type="email"
-                    onChange={(e) => this.handleChange(e)}
-                    placeholder="email"
-                    required
-                />
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="password"
-                    onChange={(e) => this.handleChange(e)}
-                    required
-                />
-                <button onClick={() => this.submit()}>register</button>
-                <div>
-                    <span>
-                        or perhaps you have already registered?
-                        <Link to="/login">login</Link>
-                    </span>
+                <div className="welcome-wrapper">
+                    <div className="welcome-container">
+                        <h3>Welcome to the Social Network.</h3>
+                        <div className="motivation-wrapper">
+                            <span>
+                                To keep connected with us, please login with
+                                your credentials.
+                            </span>
+                            <Link to="/login">
+                                <div className="welcome-button">LOGIN</div>
+                            </Link>
+                            <Link to="/passwordreset">
+                                <div className="welcome-button">
+                                    Forgot your password?
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="welcome-form">
+                        <h3>Create Account</h3>
+                        <p className="word-wrapper">
+                            Please add your credentials to become a member of
+                            this fine establishment.
+                        </p>
+                        <input
+                            name="firstName"
+                            onChange={(e) => this.handleChange(e)}
+                            placeholder="first name"
+                            required
+                        />
+                        <input
+                            name="lastName"
+                            onChange={(e) => this.handleChange(e)}
+                            placeholder="last name"
+                            required
+                        />
+                        <input
+                            name="email"
+                            type="email"
+                            onChange={(e) => this.handleChange(e)}
+                            placeholder="email"
+                            required
+                        />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="password"
+                            onChange={(e) => this.handleChange(e)}
+                            required
+                        />
+                        <button
+                            className="register-button"
+                            onClick={() => this.submit()}
+                        >
+                            REGISTER
+                        </button>
+                    </div>
                 </div>
             </div>
         );

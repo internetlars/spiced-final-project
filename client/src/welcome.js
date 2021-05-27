@@ -11,8 +11,8 @@ export default function Welcome() {
         <div>
             {/* renders splash image or logo */}
             {/* <img></img> */}
-            <h1>Welcome!</h1>
-            <Logo />
+            {/* <h1>Welcome!</h1>
+            <Logo /> */}
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Registration} />

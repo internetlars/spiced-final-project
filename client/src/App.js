@@ -9,6 +9,21 @@ import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
 import Chat from "./chat";
+import NavBar from "./navbar";
+import Tab from "./components/tab";
+import IconLink from "./components/iconLink";
+import {
+    faBell,
+    faComments,
+    faHome,
+    faUserFriends,
+    faSearch,
+    faUser,
+    faCogs,
+    faSignOutAlt,
+    faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+
 // import FriendshipButton from "./FriendshipButton";
 
 //must be a class component (needs both state and lifecycle components)
@@ -53,72 +68,134 @@ export default class App extends React.Component {
     render() {
         return (
             <>
-                <div>
-                    <header>
-                        {/* <h1>hello i am App</h1> */}
-                        <ProfilePic
-                            firstName={this.state.firstName}
-                            lastName={this.state.lastName}
-                            imgUrl={
-                                this.state.imgUrl ||
-                                "/images/defaultprofilepic.jpeg"
-                            }
-                            toggleUploader={this.toggleUploader}
-                        />
-                    </header>
-                    <BrowserRouter>
-                        <div>
-                            <Route
-                                exact
-                                path="/"
-                                render={() => (
-                                    <Profile
-                                        id={this.state.id}
-                                        firstName={this.state.firstName}
-                                        lastName={this.state.lastName}
-                                        imgUrl={
-                                            this.state.imgUrl ||
-                                            "defaultprofilepic.jpeg"
-                                        }
-                                        bio={this.state.bio}
-                                        setBio={(bio) => this.setBio(bio)}
-                                        toggleUploader={this.toggleUploader}
+                <BrowserRouter>
+                    <div className="bar-wrapper">
+                        <div className="sideBar">
+                            <div>
+                                <ProfilePic
+                                    firstName={this.state.firstName}
+                                    lastName={this.state.lastName}
+                                    imgUrl={
+                                        this.state.imgUrl ||
+                                        "/images/defaultprofilepic.jpeg"
+                                    }
+                                    toggleUploader={this.toggleUploader}
+                                />
+                            </div>
+                            <div className="tab-wrapper">
+                                <div>
+                                    <Tab link="/" icon={faHome} text="Home" />
+                                    <Tab
+                                        link="/friendrequests"
+                                        icon={faUserFriends}
+                                        text="Friends"
                                     />
-                                )}
-                            />
-                            {/* <Route path="/user/:id" component={OtherProfile} /> */}
-                            <Route
-                                exact
-                                path="/user/:id"
-                                render={(props) => (
-                                    <OtherProfile
-                                        key={props.match.url}
-                                        match={props.match}
-                                        history={props.history}
+                                    <Tab
+                                        link="/chat"
+                                        icon={faComments}
+                                        text="Chat"
                                     />
-                                )}
-                            />
-                            {/* route to search  */}
-                            <Route path="/find/users" component={FindPeople} />
-                            <Route
-                                path="/find/users:id"
-                                component={OtherProfile}
-                            />
-                            <Route
-                                path="/friendrequests"
-                                component={Friends}
-                            ></Route>
-                            <Route path="/chat" component={Chat}></Route>
-                        </div>
-                    </BrowserRouter>
+                                    <Tab
+                                        link="/find/users"
+                                        icon={faSearch}
+                                        text="Search"
+                                    />
+                                </div>
 
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            updateProfilePic={this.updateProfilePic}
-                            toggleUploader={this.toggleUploader}
-                        />
-                    )}
-                </div>
+                                <div>
+                                    <Tab
+                                        link="/"
+                                        icon={faUser}
+                                        text="Profile"
+                                    />
+                                    <Tab
+                                        link="/"
+                                        icon={faCogs}
+                                        text="Settings"
+                                    />
+                                </div>
+                            </div>
+
+                            <div></div>
+                        </div>
+                        <div className="bar-container">
+                            <div className="navbar-wrapper">
+                                <IconLink link="/find/users" icon={faBell} />
+                                <IconLink
+                                    link="/find/users"
+                                    icon={faEnvelope}
+                                />
+                                <IconLink link="/find/users" icon={faSearch} />
+                                <IconLink link="/logout" icon={faSignOutAlt} />
+                            </div>
+                            <div className="mainBar">
+                                <div>
+                                    {/* <NavBar></NavBar> */}
+
+                                    <Route
+                                        exact
+                                        path="/"
+                                        render={() => (
+                                            <Profile
+                                                id={this.state.id}
+                                                firstName={this.state.firstName}
+                                                lastName={this.state.lastName}
+                                                imgUrl={
+                                                    this.state.imgUrl ||
+                                                    "defaultprofilepic.jpeg"
+                                                }
+                                                bio={this.state.bio}
+                                                setBio={(bio) =>
+                                                    this.setBio(bio)
+                                                }
+                                                toggleUploader={
+                                                    this.toggleUploader
+                                                }
+                                            />
+                                        )}
+                                    />
+                                    {/* <Route path="/user/:id" component={OtherProfile} /> */}
+                                    <Route
+                                        exact
+                                        path="/user/:id"
+                                        render={(props) => (
+                                            <OtherProfile
+                                                key={props.match.url}
+                                                match={props.match}
+                                                history={props.history}
+                                            />
+                                        )}
+                                    />
+                                    {/* route to search  */}
+                                    <Route
+                                        path="/find/users"
+                                        component={FindPeople}
+                                    />
+                                    <Route
+                                        path="/find/users:id"
+                                        component={OtherProfile}
+                                    />
+                                    <Route
+                                        path="/friendrequests"
+                                        component={Friends}
+                                    ></Route>
+                                    <Route
+                                        path="/chat"
+                                        component={Chat}
+                                    ></Route>
+                                    {/* <Route path="/navbar" component={NavBar}></Route> */}
+                                </div>
+                            </div>
+                        </div>
+
+                        {this.state.uploaderIsVisible && (
+                            <Uploader
+                                updateProfilePic={this.updateProfilePic}
+                                toggleUploader={this.toggleUploader}
+                            />
+                        )}
+                    </div>
+                </BrowserRouter>
             </>
         );
     }

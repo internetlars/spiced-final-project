@@ -25,7 +25,7 @@ export default function Chat() {
 
     return (
         <div className="chat-container">
-            <h1>CHAT ROOM</h1>
+            <h1>Chat Room</h1>
             <div className="chat-message-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages.map((message, index) => {
@@ -37,18 +37,30 @@ export default function Chat() {
                             created_at,
                         } = message;
                         return (
-                            <div className="anothercontainerinchat" key={index}>
-                                <img
-                                    className="chat-icon"
-                                    src={img_url}
-                                    alt={`${first_name} ${last_name}`}
-                                />
-                                <Link to={`/user/${id}`}>
-                                    {" "}
-                                    {first_name} {last_name}{" "}
-                                </Link>
-                                <span>{created_at}</span>
-                                <p key={index}>{message.message}</p>
+                            <div
+                                className="anothercontainerinchatWrapper"
+                                key={index}
+                            >
+                                <div
+                                    className="anothercontainerinchat"
+                                    key={index}
+                                >
+                                    <img
+                                        className="chat-icon"
+                                        src={img_url}
+                                        alt={`${first_name} ${last_name}`}
+                                    />
+                                    <Link to={`/user/${id}`}>
+                                        {first_name} {last_name}
+                                    </Link>
+                                    <br></br>
+                                    <p className="chat-message" key={index}>
+                                        {message.message}
+                                    </p>
+                                </div>
+                                <span className="chat-timestamp">
+                                    {created_at}
+                                </span>
                             </div>
                         );
                     })}

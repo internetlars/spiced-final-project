@@ -1,8 +1,8 @@
-import React from "react";
+// import React from "react";
 import { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
-import ResetPassword from "./passwordreset";
+// import ResetPassword from "./passwordreset";
 
 export default class Login extends Component {
     constructor(props) {
@@ -39,36 +39,40 @@ export default class Login extends Component {
     render() {
         console.log("login is rendering");
         return (
-            <div>
+            <div className="login-wrapper">
                 {this.state.error && <div>Wrong credentials!</div>}
-                <form>
-                    <div>
-                        <input
-                            type="email"
-                            placeholder="email"
-                            name="email"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                    </div>
+                <form className="login-container">
+                    <input
+                        type="email"
+                        placeholder="email"
+                        name="email"
+                        onChange={(e) => this.handleChange(e)}
+                    />
 
-                    <div>
-                        <input
-                            type="password"
-                            placeholder="password"
-                            name="password"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                    </div>
+                    <input
+                        type="password"
+                        placeholder="password"
+                        name="password"
+                        onChange={(e) => this.handleChange(e)}
+                    />
 
-                    <button type="button" onClick={() => this.submit()}>
+                    <button
+                        className="login-button"
+                        type="button"
+                        onClick={() => this.submit()}
+                    >
                         login
                     </button>
                 </form>
-                <span>
+                <div className="reminder-container">
                     not a member yet?
-                    <Link to="/">click here to Register!</Link>
-                    <Link to="/password/reset">Reset Password</Link>
-                </span>
+                    <div className="register-button">
+                        <Link to="/">Register</Link>
+                    </div>
+                    <div className="register-button">
+                        <Link to="/password/reset">Reset Password</Link>
+                    </div>
+                </div>
             </div>
         );
     }

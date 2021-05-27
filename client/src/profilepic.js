@@ -3,13 +3,16 @@
 export default function ProfilePic(props) {
     return (
         <>
-            <div>
+            <div className="profilepic-wrapper">
                 <img
-                    className="profilepic"
+                    className="tab-avatar"
                     src={props.imgUrl}
                     alt={`${props.firstName} + ${props.lastName}`}
                     onClick={props.toggleUploader}
                 />
+                <h3>
+                    {props.firstName} {props.lastName}
+                </h3>
             </div>
         </>
     );
