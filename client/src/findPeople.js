@@ -25,7 +25,7 @@ export default function FindPeople() {
         let ignore = false;
         (async () => {
             try {
-                const { data } = await axios.post("/find/users.json/");
+                const { data } = await axios.get("/find/users/:inputField");
                 // .catch((error) => {
                 //     console.log("Error caught in useEffect 2: ", error);
                 // });

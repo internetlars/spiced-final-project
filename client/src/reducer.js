@@ -1,5 +1,5 @@
 export default function reducer(state = {}, action) {
-    if (action.type === "FRIEND_REQUESTS") {
+    if (action.type === "FRIEND_REQUEST") {
         state = {
             ...state,
             users: action.users,
@@ -29,5 +29,18 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type === "RECENT_MESSAGES") {
+        state = {
+            ...state,
+            chatMessages: [...action.messages],
+        };
+    }
+
+    if (action.type === "NEW_MESSAGE") {
+        state = {
+            ...state,
+            chatMessages: [...state.chatMessages, action.message],
+        };
+    }
     return state;
 }

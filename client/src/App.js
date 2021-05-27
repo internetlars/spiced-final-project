@@ -7,6 +7,7 @@ import ProfilePic from "./profilepic";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
+import Friends from "./Friends";
 // import FriendshipButton from "./FriendshipButton";
 
 //must be a class component (needs both state and lifecycle components)
@@ -102,6 +103,10 @@ export default class App extends React.Component {
                                 path="/find/users:id"
                                 component={OtherProfile}
                             />
+                            <Route
+                                path="/friendrequests"
+                                component={Friends}
+                            ></Route>
                         </div>
                     </BrowserRouter>
 

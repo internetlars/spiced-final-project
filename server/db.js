@@ -98,7 +98,7 @@ module.exports.getOtherUser = (userId) => {
 
 module.exports.getNewestUsers = () => {
     const q = `
-    SELECT first_name, last_name, img_url
+    SELECT first_name, last_name, img_url, id
     FROM users
     ORDER BY id DESC LIMIT 3
     `;
@@ -154,5 +154,19 @@ module.exports.retrieveFriendsAndWannabees = (userId) => {
         OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
     `,
         [userId]
+    );
+};
+
+//10
+module.exports.addChatMessage = (message, userId) => {
+    return db.query(
+        `INSERT INTO chat (message, sender_id) VALUES ($1, $2) RETURNING *`,
+        [message, userId]
+    );
+};
+
+module.exports.retrieveLatestMessages = () => {
+    return db.query(
+        `SELECT users.id, first_name, last_name, img_url, message, chat.created_at FROM users JOIN chat ON chat.sender_id = users.id ORDER BY chat.created_at DESC LIMIT 10`
     );
 };

@@ -53,3 +53,20 @@ export async function unFriend(userId) {
         );
     }
 }
+
+//10
+export async function chatMessages(messages) {
+    console.log("recent messages in actions: ", messages);
+    return {
+        type: "RECENT_MESSAGES",
+        messages,
+    };
+}
+
+export async function chatMessage(message) {
+    console.log("message in actions for receiving message: ", message);
+    return {
+        type: "NEW_MESSAGE",
+        message,
+    };
+}

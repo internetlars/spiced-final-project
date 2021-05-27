@@ -325,10 +325,10 @@ app.get("/other-user/:id", (req, res) => {
 });
 
 //search bar
-app.get("/find/users/:id", (req, res) => {
+app.get("/find/users/:inputField", (req, res) => {
     console.log("GET request made to find/users/:id.");
-    const { id } = req.params;
-    db.searchForUserInformation(id)
+    const { inputField } = req.params;
+    db.searchForUserInformation(inputField)
         .then((result) => {
             res.json(result.rows);
         })
@@ -337,6 +337,7 @@ app.get("/find/users/:id", (req, res) => {
         });
 });
 
+// newest users!
 app.get("/find/users.json", (req, res) => {
     console.log("GET request made to /find/users.");
     db.getNewestUsers()
@@ -462,5 +463,35 @@ io.on("connection", function (socket) {
     const userId = socket.request.session.userId;
     console.log("userId in sockets: ", userId);
 
-    /* ... */
+    (async () => {
+        try {
+            const { rows } = await db.retrieveLatestMessages();
+            io.sockets.emit("chatMessages", rows.reverse());
+        } catch (error) {
+            console.log("Error caught db.retrieveLastMessages:", error);
+        }
+    })();
+
+    socket.on("chatMessage", async (msg) => {
+        const message = msg;
+        console.log("message from chat.js:", message);
+
+        try {
+            const result = await db.addChatMessage(message, userId);
+            const { rows } = await db.getUser(userId);
+            console.log("rows in chat socket: ", rows);
+            const chatData = {
+                sender_id: rows[0].id,
+                first_name: rows[0].first_name,
+                last_name: rows[0].last_name,
+                img_url: rows[0].img_url,
+                message: result.rows[0].message,
+                created_at: result.rows[0].created_at,
+            };
+            console.log("chatInfo from chat.js:", chatData);
+            io.sockets.emit("chatMessage", chatData);
+        } catch (error) {
+            console.log("Error caught inserting message from chat.js:", error);
+        }
+    });
 });
