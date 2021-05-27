@@ -25,7 +25,7 @@ export default function Profile(props) {
                     {" "}
                     <img
                         className="profileinfo-img"
-                        src={props.imgUrl}
+                        src={props.imgUrl || "/images/defaultprofilepic.jpeg"}
                         alt={`${props.firstName} ${props.lastName}`}
                     />
                     <h4>

@@ -22,6 +22,7 @@ import {
     faCogs,
     faSignOutAlt,
     faEnvelope,
+    faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 
 // import FriendshipButton from "./FriendshipButton";
@@ -94,6 +95,11 @@ export default class App extends React.Component {
                                         link="/chat"
                                         icon={faComments}
                                         text="Chat"
+                                    />
+                                    <Tab
+                                        link="/chat"
+                                        icon={faVideo}
+                                        text="Live"
                                     />
                                     <Tab
                                         link="/find/users"

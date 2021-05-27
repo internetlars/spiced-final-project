@@ -37,33 +37,35 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <>
-                <div className="uploader-container">
-                    <span
-                        onClick={this.props.toggleUploader}
-                        className="close-button"
-                    >
-                        X
-                    </span>
-                    <h3>upload a profile pic</h3>
-                    <div>
-                        <input
-                            type="file"
-                            name="file"
-                            accept="image/*"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <button
-                            onClick={(e) => this.submitFile(e)}
-                            className="submit-button"
-                        >
-                            submit
-                        </button>
-                        <button
-                            className="toggleuploader-button"
+                <div className="uploader-wrapper">
+                    <div className="uploader-container">
+                        <div
                             onClick={this.props.toggleUploader}
+                            className="close-button"
                         >
-                            cancel
-                        </button>
+                            X
+                        </div>
+                        <h3>upload a profile pic</h3>
+                        <div className="uploader-file-form">
+                            <input
+                                type="file"
+                                name="file"
+                                accept="image/*"
+                                onChange={(e) => this.handleChange(e)}
+                            />
+                            <button
+                                onClick={(e) => this.submitFile(e)}
+                                className="submit-button"
+                            >
+                                submit
+                            </button>
+                            <button
+                                className="toggleuploader-button"
+                                onClick={this.props.toggleUploader}
+                            >
+                                cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             </>

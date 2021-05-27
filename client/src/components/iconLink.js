@@ -7,6 +7,7 @@ export default function IconLink(props) {
             <Link to={props.link}>
                 <div>
                     <FontAwesomeIcon
+                        className="fontawesome-iconLink"
                         style={{
                             marginRight: "30px",
                             width: "25px",

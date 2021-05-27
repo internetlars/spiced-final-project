@@ -25,10 +25,10 @@ export default function Friends() {
     // }
     return (
         <>
-            <div className="friends-container">
-                <h4>You have {friends && friends.length} friends!</h4>
+            <div>
+                <h2>You have {friends && friends.length} friends!</h2>
                 <ul>
-                    <div>
+                    <div className="friends-container">
                         {friends &&
                             friends.map((user) => {
                                 const {
@@ -45,6 +45,7 @@ export default function Friends() {
                                     <div key={id}>
                                         <Link key={id} to={`/user/${id}`}>
                                             <img
+                                                className="friends-card"
                                                 key={img_url}
                                                 src={
                                                     img_url ||
@@ -71,9 +72,10 @@ export default function Friends() {
                     </div>
                 </ul>
             </div>
-            <div className="requests-container">
-                <h4>You have {requests && requests.length} friend requests.</h4>
-                <div>
+            <br></br>
+            <div>
+                <h2>...and {requests && requests.length} friend requests!</h2>
+                <div className="requests-container">
                     {requests &&
                         requests.map((user) => {
                             const { id, first_name, last_name, img_url } = user;
@@ -85,6 +87,7 @@ export default function Friends() {
                                 <div key={id}>
                                     <Link key={id} to={`/user/${id}`}>
                                         <img
+                                            className="requests-card"
                                             key={img_url}
                                             src={
                                                 img_url ||

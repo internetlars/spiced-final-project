@@ -78,6 +78,7 @@ export default class BioEditor extends Component {
                 {this.state.showTextArea && (
                     <>
                         <textarea
+                            className="bio-container-textarea"
                             defaultValue={this.props.bio}
                             onChange={(e) => this.handleBioChange(e)}
                         ></textarea>

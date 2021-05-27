@@ -50,7 +50,7 @@ export default class Registration extends React.Component {
                 )}
                 <div className="welcome-wrapper">
                     <div className="welcome-container">
-                        <h3>Welcome to the Social Network.</h3>
+                        <h3>Welcome to the Nocial Setwork.</h3>
                         <div className="motivation-wrapper">
                             <span>
                                 To keep connected with us, please login with

@@ -436,7 +436,7 @@ app.get("/friendrequests.json", async (req, res) => {
 app.get("/logout", (req, res) => {
     console.log("logout route requested.");
     req.session = null;
-    res.redirect("/");
+    res.redirect("/welcome");
 });
 
 // sending HTML file back as response to browser - VERY IMPORTANT FOR THINGS TO WORK...
