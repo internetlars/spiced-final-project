@@ -70,7 +70,7 @@ export default class Login extends Component {
                         <Link to="/">Register</Link>
                     </div>
                     <div className="register-button">
-                        <Link to="/password/reset">Reset Password</Link>
+                        <Link to="/password/reset">Forgot your password?</Link>
                     </div>
                 </div>
             </div>
