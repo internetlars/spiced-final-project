@@ -1,0 +1,19 @@
+{
+    "courts": [
+        {
+            "name": "Maus Court",
+            "latitude": 52.496301,
+            "longitude": 13.423492
+        },
+        {
+            "name": "Pizza Court",
+            "latitude": 52.491541,
+            "longitude": 13.42622
+        },
+        {
+            "name": "Router Court",
+            "latitude": 52.488748,
+            "longitude": 13.429375
+        }
+    ]
+}

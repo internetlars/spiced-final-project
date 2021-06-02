@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./profile";
+import Logo from "./logo";
 import Uploader from "./uploader";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
@@ -8,6 +9,7 @@ import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
 import Chat from "./chat";
+import NavBar from "./navbar";
 import Tab from "./components/tab";
 import IconLink from "./components/iconLink";
 import Map from "./Map";

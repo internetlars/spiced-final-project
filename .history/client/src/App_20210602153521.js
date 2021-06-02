@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./profile";
+import Logo from "./logo";
 import Uploader from "./uploader";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
@@ -8,25 +9,28 @@ import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
 import Chat from "./chat";
+import NavBar from "./navbar";
 import Tab from "./components/tab";
 import IconLink from "./components/iconLink";
-import Map from "./Map";
-import Button from "./components/Button";
-import CheckInModal from "./components/CheckInModal";
+// import Map from "./Map";
 // import MapboxGL from "react-map-gl";
-// import mapboxgl from "!mapbox-gl";
-// import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "!mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
-// mapboxgl.accessToken =
-//     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
+mapboxgl.accessToken =
+    "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
 
 import {
+    faBell,
     faComments,
     faHome,
     faUserFriends,
+    faSearch,
     faUser,
     faCogs,
     faSignOutAlt,
+    faEnvelope,
+    faVideo,
     faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -38,33 +42,32 @@ export default class App extends React.Component {
         super();
         this.state = {
             uploaderIsVisible: false,
-            openModal: false,
-            // lng: 13.4,
-            // lat: 52.52,
-            // zoom: 10,
+            lng: 13.4,
+            lat: 52.52,
+            zoom: 10,
         };
-        // this.mapContainer = React.createRef();
+        this.mapContainer = React.createRef();
 
         this.toggleUploader = this.toggleUploader.bind(this);
         this.updateProfilePic = this.updateProfilePic.bind(this);
     }
     componentDidMount() {
         console.log("App just mounted");
-        // const { lng, lat, zoom } = this.state;
-        // const map = new mapboxgl.Map({
-        //     container: this.mapContainer.current,
-        //     style: "mapbox://styles/mapbox/streets-v11",
-        //     center: [lng, lat],
-        //     zoom: zoom,
-        // });
+        const { lng, lat, zoom } = this.state;
+        const map = new mapboxgl.Map({
+            container: this.mapContainer.current,
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: [lng, lat],
+            zoom: zoom,
+        });
 
-        // map.on("move", () => {
-        //     this.setState({
-        //         lng: map.getCenter().lng.toFixed(4),
-        //         lat: map.getCenter().lat.toFixed(4),
-        //         zoom: map.getZoom().toFixed(2),
-        //     });
-        // });
+        map.on("move", () => {
+            this.setState({
+                lng: map.getCenter().lng.toFixed(4),
+                lat: map.getCenter().lat.toFixed(4),
+                zoom: map.getZoom().toFixed(2),
+            });
+        });
 
         axios.get("/user").then((response) => {
             // console.log("response.data in axios: ", response.data);
@@ -95,7 +98,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        // const { lng, lat, zoom } = this.state;
+        const { lng, lat, zoom } = this.state;
 
         return (
             <>
@@ -121,34 +124,28 @@ export default class App extends React.Component {
                                             icon={faHome}
                                             text="Home"
                                         />
-                                        {/* <Tab
-                                            link="/friendrequests"
-                                            icon={faUserFriends}
-                                            text="Friends"
-                                        /> */}
                                         <Tab
                                             link="/friendrequests"
                                             icon={faUserFriends}
-                                            text="Courts"
+                                            text="Friends"
                                         />
-
                                         <Tab
                                             link="/chat"
                                             icon={faComments}
                                             text="Chat"
                                         />
-                                        {/* <Tab
+                                        <Tab
                                             link="/chat"
                                             icon={faVideo}
                                             text="Live"
-                                        /> */}
-                                        {/* <Tab
+                                        />
+                                        <Tab
                                             link="/find/users"
                                             icon={faSearch}
                                             text="Search"
-                                        /> */}
+                                        />
                                         <Tab
-                                            link="/"
+                                            link="/map"
                                             icon={faMapMarkerAlt}
                                             text="Map"
                                         />
@@ -172,16 +169,18 @@ export default class App extends React.Component {
                             </div>
                             <div className="bar-container">
                                 <div className="navbar-wrapper">
-                                    <Button
-                                        text="Check-In"
-                                        onPressButton={() =>
-                                            this.setState({
-                                                openModal:
-                                                    !this.state.openModal,
-                                            })
-                                        }
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faBell}
                                     />
-                                    <CheckInModal open={this.state.openModal} />
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faEnvelope}
+                                    />
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faSearch}
+                                    />
                                     <IconLink
                                         link="/logout"
                                         icon={faSignOutAlt}
@@ -189,14 +188,11 @@ export default class App extends React.Component {
                                 </div>
                                 <div className="mainBar">
                                     <div>
+                                        {/* <NavBar></NavBar> */}
+
                                         <Route
                                             exact
                                             path="/"
-                                            render={() => <Map />}
-                                        />
-                                        <Route
-                                            exact
-                                            path="/profile"
                                             render={() => (
                                                 <Profile
                                                     id={this.state.id}
@@ -220,8 +216,6 @@ export default class App extends React.Component {
                                                 />
                                             )}
                                         />
-                                        {/* <NavBar></NavBar> */}
-
                                         {/* <Route path="/user/:id" component={OtherProfile} /> */}
                                         <Route
                                             exact
@@ -256,6 +250,23 @@ export default class App extends React.Component {
                                 </div>
                             </div>
 
+                            <div>
+                                <div
+                                    ref={this.mapContainer}
+                                    className="map-container"
+                                />
+                            </div>
+
+                            <div
+                                ref={this.mapContainer}
+                                className="map-container"
+                            >
+                                <div className="mapbar">
+                                    Longitude: {lng} | Latitude: {lat} | Zoom:{" "}
+                                    {zoom}
+                                </div>
+                            </div>
+
                             {this.state.uploaderIsVisible && (
                                 <Uploader
                                     updateProfilePic={this.updateProfilePic}
@@ -263,19 +274,6 @@ export default class App extends React.Component {
                                 />
                             )}
                         </div>
-                        {/* <div>
-                            <div
-                                ref={this.mapContainer}
-                                className="map-container"
-                            />
-                        </div>
-
-                        <div ref={this.mapContainer} className="map-container">
-                            <div className="mapbar">
-                                Longitude: {lng} | Latitude: {lat} | Zoom:{" "}
-                                {zoom}
-                            </div>
-                        </div> */}
                     </div>
                 </BrowserRouter>
             </>

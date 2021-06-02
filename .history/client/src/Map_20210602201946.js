@@ -40,9 +40,9 @@ export default class Map extends React.Component {
 
         return (
             <>
-                {/* <div>
+                <div>
                     <div ref={this.mapContainer} className="map-container" />
-                </div> */}
+                </div>
 
                 <div ref={this.mapContainer} className="map-container">
                     <div className="mapbar">

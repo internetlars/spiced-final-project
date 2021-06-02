@@ -497,34 +497,4 @@ h1 {
 
 .button-component {
     padding: 10px;
-    background-color: #30ffdd;
-    border-color: #30ffdd;
-}
-
-.container-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5em 1em;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 99;
-    overflow-y: auto;
-}
-
-.modal-inside {
-    background: #ffffff;
-    width: 40%;
-    height: 50%;
-    max-width: 600;
-    border-radius: 2;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 }

@@ -21,7 +21,7 @@ export default class Map extends React.Component {
         const { lng, lat, zoom } = this.state;
         const map = new mapboxgl.Map({
             container: this.mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v11",
+            // style: "mapbox://styles/mapbox/streets-v11",
             center: [lng, lat],
             zoom: zoom,
         });
@@ -40,9 +40,9 @@ export default class Map extends React.Component {
 
         return (
             <>
-                {/* <div>
+                <div>
                     <div ref={this.mapContainer} className="map-container" />
-                </div> */}
+                </div>
 
                 <div ref={this.mapContainer} className="map-container">
                     <div className="mapbar">

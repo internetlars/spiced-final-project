@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./profile";
+import Logo from "./logo";
 import Uploader from "./uploader";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
@@ -8,11 +9,10 @@ import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
 import Chat from "./chat";
+import NavBar from "./navbar";
 import Tab from "./components/tab";
 import IconLink from "./components/iconLink";
 import Map from "./Map";
-import Button from "./components/Button";
-import CheckInModal from "./components/CheckInModal";
 // import MapboxGL from "react-map-gl";
 // import mapboxgl from "!mapbox-gl";
 // import "mapbox-gl/dist/mapbox-gl.css";
@@ -21,12 +21,16 @@ import CheckInModal from "./components/CheckInModal";
 //     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
 
 import {
+    faBell,
     faComments,
     faHome,
     faUserFriends,
+    faSearch,
     faUser,
     faCogs,
     faSignOutAlt,
+    faEnvelope,
+    faVideo,
     faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -38,7 +42,6 @@ export default class App extends React.Component {
         super();
         this.state = {
             uploaderIsVisible: false,
-            openModal: false,
             // lng: 13.4,
             // lat: 52.52,
             // zoom: 10,
@@ -121,34 +124,28 @@ export default class App extends React.Component {
                                             icon={faHome}
                                             text="Home"
                                         />
-                                        {/* <Tab
-                                            link="/friendrequests"
-                                            icon={faUserFriends}
-                                            text="Friends"
-                                        /> */}
                                         <Tab
                                             link="/friendrequests"
                                             icon={faUserFriends}
-                                            text="Courts"
+                                            text="Friends"
                                         />
-
                                         <Tab
                                             link="/chat"
                                             icon={faComments}
                                             text="Chat"
                                         />
-                                        {/* <Tab
+                                        <Tab
                                             link="/chat"
                                             icon={faVideo}
                                             text="Live"
-                                        /> */}
+                                        />
                                         {/* <Tab
                                             link="/find/users"
                                             icon={faSearch}
                                             text="Search"
                                         /> */}
                                         <Tab
-                                            link="/"
+                                            link="/map"
                                             icon={faMapMarkerAlt}
                                             text="Map"
                                         />
@@ -172,16 +169,18 @@ export default class App extends React.Component {
                             </div>
                             <div className="bar-container">
                                 <div className="navbar-wrapper">
-                                    <Button
-                                        text="Check-In"
-                                        onPressButton={() =>
-                                            this.setState({
-                                                openModal:
-                                                    !this.state.openModal,
-                                            })
-                                        }
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faBell}
                                     />
-                                    <CheckInModal open={this.state.openModal} />
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faEnvelope}
+                                    />
+                                    <IconLink
+                                        link="/find/users"
+                                        icon={faSearch}
+                                    />
                                     <IconLink
                                         link="/logout"
                                         icon={faSignOutAlt}

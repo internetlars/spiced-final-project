@@ -515,16 +515,3 @@ h1 {
     z-index: 99;
     overflow-y: auto;
 }
-
-.modal-inside {
-    background: #ffffff;
-    width: 40%;
-    height: 50%;
-    max-width: 600;
-    border-radius: 2;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}

@@ -473,8 +473,8 @@ h1 {
 .map-container {
     /* height: 100vh; */
     /* object-fit: contain; */
-    height: 100vh;
-    width: auto;
+    height: 130vh;
+    width: 700px;
 }
 
 .mapbar {
@@ -484,8 +484,8 @@ h1 {
     font-family: monospace;
     z-index: 1;
     position: absolute;
-    /* top: 0;
-    left: 0; */
+    top: 0;
+    left: 0;
     margin: 12px;
     border-radius: 4px;
 }
@@ -493,38 +493,4 @@ h1 {
 .map {
     height: 100%;
     width: 100%;
-}
-
-.button-component {
-    padding: 10px;
-    background-color: #30ffdd;
-    border-color: #30ffdd;
-}
-
-.container-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5em 1em;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 99;
-    overflow-y: auto;
-}
-
-.modal-inside {
-    background: #ffffff;
-    width: 40%;
-    height: 50%;
-    max-width: 600;
-    border-radius: 2;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 }

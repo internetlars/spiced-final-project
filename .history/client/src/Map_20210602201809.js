@@ -6,6 +6,9 @@ import "mapbox-gl/dist/mapbox-gl.css";
 mapboxgl.accessToken =
     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
 
+// import FriendshipButton from "./FriendshipButton";
+
+//must be a class component (needs both state and lifecycle components)
 export default class Map extends React.Component {
     constructor() {
         super();
@@ -40,9 +43,9 @@ export default class Map extends React.Component {
 
         return (
             <>
-                {/* <div>
+                <div>
                     <div ref={this.mapContainer} className="map-container" />
-                </div> */}
+                </div>
 
                 <div ref={this.mapContainer} className="map-container">
                     <div className="mapbar">

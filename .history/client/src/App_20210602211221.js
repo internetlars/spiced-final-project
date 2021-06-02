@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./profile";
+import Logo from "./logo";
 import Uploader from "./uploader";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
@@ -8,6 +9,7 @@ import OtherProfile from "./other-profile";
 import FindPeople from "./findPeople";
 import Friends from "./Friends";
 import Chat from "./chat";
+import NavBar from "./navbar";
 import Tab from "./components/tab";
 import IconLink from "./components/iconLink";
 import Map from "./Map";
@@ -21,12 +23,16 @@ import CheckInModal from "./components/CheckInModal";
 //     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
 
 import {
+    faBell,
     faComments,
     faHome,
     faUserFriends,
+    faSearch,
     faUser,
     faCogs,
     faSignOutAlt,
+    faEnvelope,
+    faVideo,
     faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -173,15 +179,10 @@ export default class App extends React.Component {
                             <div className="bar-container">
                                 <div className="navbar-wrapper">
                                     <Button
-                                        text="Check-In"
-                                        onPressButton={() =>
-                                            this.setState({
-                                                openModal:
-                                                    !this.state.openModal,
-                                            })
-                                        }
+                                        text="Check-in"
+                                        onPressButton={() => this.setState}
                                     />
-                                    <CheckInModal open={this.state.openModal} />
+                                    <CheckInModal open={openModal} />
                                     <IconLink
                                         link="/logout"
                                         icon={faSignOutAlt}
