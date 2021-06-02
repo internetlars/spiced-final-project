@@ -2,6 +2,7 @@
 // App -> Profile -> ProfilePic
 import BioEditor from "./bio";
 import ProfilePic from "./profilepic";
+import Map from "./Map";
 
 export default function Profile(props) {
     console.log("props in Profile: ", props);
@@ -33,6 +34,7 @@ export default function Profile(props) {
                     </h4>
                     <BioEditor setBio={props.setBio} bio={props.bio} />
                 </div>
+                <div>{/* <Map></Map> */}</div>
             </div>
         </div>
     );

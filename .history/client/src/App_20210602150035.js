@@ -41,9 +41,9 @@ export default class App extends React.Component {
         super();
         this.state = {
             uploaderIsVisible: false,
-            lng: 52.521677,
-            lat: 13.404232,
-            zoom: 5,
+            lng: 52.521,
+            lat: 13.404,
+            zoom: 3,
         };
         this.mapContainer = React.createRef();
 
@@ -59,15 +59,6 @@ export default class App extends React.Component {
             center: [lng, lat],
             zoom: zoom,
         });
-
-        map.on("move", () => {
-            this.setState({
-                lng: map.getCenter().lng.toFixed(4),
-                lat: map.getCenter().lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2),
-            });
-        });
-
         axios.get("/user").then((response) => {
             // console.log("response.data in axios: ", response.data);
             this.setState({
@@ -95,10 +86,7 @@ export default class App extends React.Component {
             bio: newBio,
         });
     }
-
     render() {
-        const { lng, lat, zoom } = this.state;
-
         return (
             <>
                 <BrowserRouter>
@@ -236,14 +224,8 @@ export default class App extends React.Component {
                                 ref={this.mapContainer}
                                 className="map-container"
                             />
+                            TEXT
                         </div>
-                        <div className="mapbar">
-                            Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-                        </div>
-                        <div
-                            ref={this.mapContainer}
-                            className="map-container"
-                        />
 
                         {this.state.uploaderIsVisible && (
                             <Uploader

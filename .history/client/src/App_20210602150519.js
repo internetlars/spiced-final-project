@@ -236,6 +236,7 @@ export default class App extends React.Component {
                                 ref={this.mapContainer}
                                 className="map-container"
                             />
+                            TEXT
                         </div>
                         <div className="mapbar">
                             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}

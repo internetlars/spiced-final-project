@@ -14,11 +14,6 @@ import Tab from "./components/tab";
 import IconLink from "./components/iconLink";
 // import Map from "./Map";
 // import MapboxGL from "react-map-gl";
-import mapboxgl from "!mapbox-gl";
-
-mapboxgl.accessToken =
-    "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
-
 import {
     faBell,
     faComments,
@@ -41,9 +36,9 @@ export default class App extends React.Component {
         super();
         this.state = {
             uploaderIsVisible: false,
-            lng: 52.521677,
-            lat: 13.404232,
-            zoom: 5,
+            lng: -70.9,
+            lat: 42.35,
+            zoom: 9,
         };
         this.mapContainer = React.createRef();
 
@@ -59,15 +54,6 @@ export default class App extends React.Component {
             center: [lng, lat],
             zoom: zoom,
         });
-
-        map.on("move", () => {
-            this.setState({
-                lng: map.getCenter().lng.toFixed(4),
-                lat: map.getCenter().lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2),
-            });
-        });
-
         axios.get("/user").then((response) => {
             // console.log("response.data in axios: ", response.data);
             this.setState({
@@ -95,10 +81,7 @@ export default class App extends React.Component {
             bio: newBio,
         });
     }
-
     render() {
-        const { lng, lat, zoom } = this.state;
-
         return (
             <>
                 <BrowserRouter>
@@ -237,13 +220,6 @@ export default class App extends React.Component {
                                 className="map-container"
                             />
                         </div>
-                        <div className="mapbar">
-                            Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-                        </div>
-                        <div
-                            ref={this.mapContainer}
-                            className="map-container"
-                        />
 
                         {this.state.uploaderIsVisible && (
                             <Uploader

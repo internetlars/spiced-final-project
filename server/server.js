@@ -353,6 +353,17 @@ app.get("/find/users.json", (req, res) => {
         });
 });
 
+//map route
+app.get("/map", (req, res) => {
+    console.log("GET request to map page was made.");
+    res.send("/map");
+});
+
+app.post("/map", (req, res) => {
+    console.log("POST request was made to map page.");
+    res.render("/map");
+});
+
 //friend requests
 app.get("/connection/:viewedUser", async (req, res) => {
     const loggedInUser = req.session.userId;

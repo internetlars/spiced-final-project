@@ -466,7 +466,7 @@ h1 {
 }
 
 .map-container {
-    top: 100%;
+    top: 600px;
     position: absolute;
     height: 600px;
     width: 600px;
