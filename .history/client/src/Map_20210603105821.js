@@ -5,6 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
+
 export default class Map extends React.Component {
     constructor() {
         super();
@@ -25,10 +26,6 @@ export default class Map extends React.Component {
             zoom: zoom,
         });
 
-        map.once("load", () => {
-            map.resize();
-        });
-
         map.on("move", () => {
             this.setState({
                 lng: map.getCenter().lng.toFixed(4),
@@ -39,7 +36,7 @@ export default class Map extends React.Component {
 
         map.on("click", function (e) {
             var features = map.queryRenderedFeatures(e.point, {
-                layers: ["courts-in-berlin"],
+                layers: ["Courts_in_Berlin"],
             });
             if (!features.length) {
                 return;

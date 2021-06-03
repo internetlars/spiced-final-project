@@ -11,7 +11,6 @@ export default class CheckInModal extends React.Component {
         };
 
         this.getLocation = this.getLocation.bind(this);
-        this.getCoordinates = this.getCoordinates.bind(this);
         // this.checkCourts = this.checkCourts.bind(this);
     }
 
@@ -59,7 +58,7 @@ export default class CheckInModal extends React.Component {
 
     initCoords() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.getCoordinates);
+            navigator.geolocation.getCurrentPosition(getLocation);
         } else {
             console.log("Error in geolocation.");
         }
@@ -86,7 +85,7 @@ export default class CheckInModal extends React.Component {
                         <button onClick={() => this.checkCourts()}>
                             get Location
                         </button>
-                        <button onClick={() => this.initCoords()}>
+                        <button onClick={() => this.getCoordinates()}>
                             get coordinates
                         </button>
                         <button>Add Court</button>

@@ -25,10 +25,6 @@ export default class Map extends React.Component {
             zoom: zoom,
         });
 
-        map.once("load", () => {
-            map.resize();
-        });
-
         map.on("move", () => {
             this.setState({
                 lng: map.getCenter().lng.toFixed(4),

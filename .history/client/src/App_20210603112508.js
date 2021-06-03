@@ -81,7 +81,6 @@ export default class App extends React.Component {
         });
     }
     openModal() {
-        console.log("openModal triggered.");
         this.setState({
             ModalIsVisible: !this.state.ModalIsVisible,
         });
@@ -99,6 +98,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        // const { lng, lat, zoom } = this.state;
+
         return (
             <>
                 <BrowserRouter>

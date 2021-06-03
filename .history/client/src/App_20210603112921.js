@@ -99,6 +99,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        // const { lng, lat, zoom } = this.state;
+
         return (
             <>
                 <BrowserRouter>

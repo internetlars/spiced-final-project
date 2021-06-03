@@ -5,12 +5,6 @@
     font-family: "Work Sans", sans-serif;
 }
 
-/* html,
-body,
-.map-container {
-    height: 100%;
-} */
-
 body {
     background-color: ghostwhite;
     /* color: #6c4b5e; */
@@ -501,9 +495,9 @@ h1 {
     width: 100%;
 }
 
-/* .mapboxgl-canvas-container {
+.mapboxgl-canvas-container {
     height: 100vh;
-} */
+}
 
 .button-component {
     padding: 10px;

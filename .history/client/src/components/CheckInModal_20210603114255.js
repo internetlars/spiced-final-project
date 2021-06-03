@@ -11,7 +11,6 @@ export default class CheckInModal extends React.Component {
         };
 
         this.getLocation = this.getLocation.bind(this);
-        this.getCoordinates = this.getCoordinates.bind(this);
         // this.checkCourts = this.checkCourts.bind(this);
     }
 

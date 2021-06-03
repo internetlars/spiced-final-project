@@ -11,7 +11,6 @@ export default class CheckInModal extends React.Component {
         };
 
         this.getLocation = this.getLocation.bind(this);
-        this.getCoordinates = this.getCoordinates.bind(this);
         // this.checkCourts = this.checkCourts.bind(this);
     }
 
@@ -40,29 +39,18 @@ export default class CheckInModal extends React.Component {
         console.log("Location Get Location");
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.getCoordinates);
-        } else {
-            console.log("Error caught in getLocation.");
         }
     }
 
-    async getCoordinates(position) {
-        console.log("position in getCoordinates: ", position);
+    getCoordinates(position) {
         console.log(position.coords);
-        const lat = await position.coords.latitude;
-        const long = await position.coords.longitude;
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
 
         this.setState({
             latitude: lat,
             longitude: long,
         });
-    }
-
-    initCoords() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.getCoordinates);
-        } else {
-            console.log("Error in geolocation.");
-        }
     }
 
     checkCourts() {
@@ -79,17 +67,13 @@ export default class CheckInModal extends React.Component {
             <div>
                 <Modal open={this.props.open}>
                     <div>
-                        <div onClick={this.props.openModal}>X</div>
+                        <span>X</span>
                         <h3>Check-In</h3>
                         <div>Yes</div>
                         <div>No</div>
-                        <button onClick={() => this.checkCourts()}>
+                        <button onClick={() => this.getCoordinates()}>
                             get Location
                         </button>
-                        <button onClick={() => this.initCoords()}>
-                            get coordinates
-                        </button>
-                        <button>Add Court</button>
                         <div>latitude: {this.state.latitude}</div>
                         <div>latitude: {this.state.longitude}</div>
                     </div>

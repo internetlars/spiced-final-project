@@ -40,11 +40,14 @@ export default class App extends React.Component {
             uploaderIsVisible: false,
             openModal: false,
             ModalIsVisible: false,
+            // lng: 13.4,
+            // lat: 52.52,
+            // zoom: 10,
         };
+        // this.mapContainer = React.createRef();
 
         this.toggleUploader = this.toggleUploader.bind(this);
         this.updateProfilePic = this.updateProfilePic.bind(this);
-        this.openModal = this.openModal.bind(this);
     }
     componentDidMount() {
         console.log("App just mounted");
@@ -81,7 +84,6 @@ export default class App extends React.Component {
         });
     }
     openModal() {
-        console.log("openModal triggered.");
         this.setState({
             ModalIsVisible: !this.state.ModalIsVisible,
         });
@@ -99,6 +101,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        // const { lng, lat, zoom } = this.state;
+
         return (
             <>
                 <BrowserRouter>

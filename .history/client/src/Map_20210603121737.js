@@ -25,8 +25,8 @@ export default class Map extends React.Component {
             zoom: zoom,
         });
 
-        map.once("load", () => {
-            map.resize();
+        this.map.once("load", () => {
+            this.map.resize();
         });
 
         map.on("move", () => {
@@ -58,6 +58,10 @@ export default class Map extends React.Component {
                 )
                 .addTo(map);
         });
+
+        // map.on('load', function() {
+
+        // })
     }
 
     render() {
