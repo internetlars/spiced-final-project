@@ -58,7 +58,7 @@ export default class Map extends React.Component {
         const { lng, lat, zoom } = this.state;
         const map = new mapboxgl.Map({
             container: this.mapContainer.current,
-            style: "mapbox://styles/internetlars/ckph3bpuy0g3g17rt0f5fvzhe",
+            style: "mapbox://styles/internetlars/ckpfrfc2n0lo518m4svmx64g6",
             center: [lng, lat],
             zoom: zoom,
             showUserLocation: true,
@@ -116,12 +116,12 @@ export default class Map extends React.Component {
 
         map.on("click", function (e) {
             var features = map.queryRenderedFeatures(e.point, {
-                layers: ["courtsinberlin"],
+                layers: ["courts-in-berlin"],
             });
             if (!features.length) {
                 return;
             }
-            // var feature = features[0];
+            var feature = features[0];
 
             // var popup = new mapboxgl.Popup({ offset: [0, -15] })
             //     .setLngLat(feature.geometry.coordinates)

@@ -12,7 +12,7 @@ const data = [
         name: "Pizza Court",
         coordinates: [13.423588, 52.496292],
         description:
-            "Indoor half-court, small with chain baskets. Concrete floor. (Actually my own flat...)",
+            "Indoor half-court, small with chain baskets. Concrete floor.",
         checkins: 0,
     },
     {
@@ -30,10 +30,6 @@ const data = [
         checkins: 0,
     },
 ];
-
-// var b = data.filter(function (el) {
-//     return el.coordinates [x]
-// })
 
 export default class Map extends React.Component {
     constructor(props) {
@@ -58,34 +54,36 @@ export default class Map extends React.Component {
         const { lng, lat, zoom } = this.state;
         const map = new mapboxgl.Map({
             container: this.mapContainer.current,
-            style: "mapbox://styles/internetlars/ckph3bpuy0g3g17rt0f5fvzhe",
+            style: "mapbox://styles/internetlars/ckpfrfc2n0lo518m4svmx64g6",
             center: [lng, lat],
             zoom: zoom,
             showUserLocation: true,
         });
 
         data.forEach((name) => {
-            console.log("name in loop: ", name);
+            console.log("name in loop: ", name)
+
             var marker = new mapboxgl.Marker()
-                .setLngLat(name.coordinates)
-                .setPopup(
-                    new mapboxgl.Popup({ offset: [0, -15] }).setHTML(
+                .setLngLat([13.429357, 52.48854])
+                .setPopup(new mapboxgl.Popup({ offset: [0, -15] })
+                    .setLngLat(feature.geometry.coordinates)
+                    .setHTML(
                         "<h3>" +
-                            name.name +
+                            name.title +
                             "</h3>" +
                             "<p>" +
-                            name.description +
+                            feature.properties.description +
                             "</p>" +
                             "<p>" +
                             "Players currently on the court: " +
                             "</p>" +
                             "<h4>" +
-                            name.checkins +
+                            feature.properties.checkins +
                             "</h4>"
                     )
-                )
-                .addTo(map);
-        });
+                    .addTo(map);)
+        })
+
 
         //fixes render of map
         map.once("load", () => {
@@ -116,78 +114,31 @@ export default class Map extends React.Component {
 
         map.on("click", function (e) {
             var features = map.queryRenderedFeatures(e.point, {
-                layers: ["courtsinberlin"],
+                layers: ["courts-in-berlin"],
             });
             if (!features.length) {
                 return;
             }
-            // var feature = features[0];
+            var feature = features[0];
 
-            // var popup = new mapboxgl.Popup({ offset: [0, -15] })
-            //     .setLngLat(feature.geometry.coordinates)
-            //     .setHTML(
-            //         "<h3>" +
-            //             feature.properties.title +
-            //             "</h3>" +
-            //             "<p>" +
-            //             feature.properties.description +
-            //             "</p>" +
-            //             "<p>" +
-            //             "Players currently on the court: " +
-            //             "</p>" +
-            //             "<h4>" +
-            //             feature.properties.checkins +
-            //             "</h4>"
-            //     )
-            //     .addTo(map);
+            var popup = new mapboxgl.Popup({ offset: [0, -15] })
+                .setLngLat(feature.geometry.coordinates)
+                .setHTML(
+                    "<h3>" +
+                        feature.properties.title +
+                        "</h3>" +
+                        "<p>" +
+                        feature.properties.description +
+                        "</p>" +
+                        "<p>" +
+                        "Players currently on the court: " +
+                        "</p>" +
+                        "<h4>" +
+                        feature.properties.checkins +
+                        "</h4>"
+                )
+                .addTo(map);
         });
-
-        // map.on("load", function () {
-        //     map.addSource("oli-test-source", {
-        //         type: "geojson",
-        //         data: {
-        //             features: [
-        //                 {
-        //                     type: "Feature",
-        //                     properties: {
-        //                         title: "Test test test",
-        //                         description:
-        //                             "Outdoor small fullcourt with chain baskets and playground floor.",
-        //                         "check-ins": 0,
-        //                     },
-        //                     geometry: {
-        //                         type: "Point",
-        //                         coordinates: [
-        //                             13.429247340184489, 52.493398614626405,
-        //                         ],
-        //                     },
-        //                 },
-        //             ],
-        //             type: "FeatureCollection",
-        //         },
-        //     });
-        //     map.addLayer({
-        //         id: "poi-labels",
-        //         type: "symbol",
-        //         source: "oli-test-source",
-        //         layout: {
-        //             "text-field": ["get", "description"],
-        //             "text-variable-anchor": ["top", "bottom", "left", "right"],
-        //             "text-radial-offset": 0.5,
-        //             "text-justify": "auto",
-        //             "icon-image": ["get", "icon"],
-        //         },
-        //     });
-        //     map.addLayer({
-        //         id: "oli-test-layer",
-        //         type: "circle",
-        //         source: "oli-test-source",
-        //         paint: {
-        //             "circle-radius": 10,
-        //             "circle-color": "#D21B1B",
-        //         },
-        //     });
-        // });
     }
 
     render() {

@@ -116,7 +116,7 @@ export default class Map extends React.Component {
 
         map.on("click", function (e) {
             var features = map.queryRenderedFeatures(e.point, {
-                layers: ["courtsinberlin"],
+                layers: ["courts-in-berlin"],
             });
             if (!features.length) {
                 return;

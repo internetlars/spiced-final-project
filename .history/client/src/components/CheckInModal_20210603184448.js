@@ -66,7 +66,7 @@ export default class CheckInModal extends React.Component {
         }
     }
 
-    //not done yet! should check which courts are within range
+    //not done! should check which courts are within range
     checkCourts() {
         console.log(courts.courts);
         const match = courts.courts.find((item) => {

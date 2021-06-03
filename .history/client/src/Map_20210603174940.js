@@ -58,7 +58,7 @@ export default class Map extends React.Component {
         const { lng, lat, zoom } = this.state;
         const map = new mapboxgl.Map({
             container: this.mapContainer.current,
-            style: "mapbox://styles/internetlars/ckph3bpuy0g3g17rt0f5fvzhe",
+            style: "mapbox://styles/internetlars/ckpfrfc2n0lo518m4svmx64g6",
             center: [lng, lat],
             zoom: zoom,
             showUserLocation: true,
@@ -114,14 +114,14 @@ export default class Map extends React.Component {
         //enable check-in
         // map.on('load', function () {
 
-        map.on("click", function (e) {
-            var features = map.queryRenderedFeatures(e.point, {
-                layers: ["courtsinberlin"],
-            });
-            if (!features.length) {
-                return;
-            }
-            // var feature = features[0];
+        // map.on("click", function (e) {
+        //     var features = map.queryRenderedFeatures(e.point, {
+        //         layers: ["courts-in-berlin"],
+        //     });
+        //     if (!features.length) {
+        //         return;
+        //     }
+        //     var feature = features[0];
 
             // var popup = new mapboxgl.Popup({ offset: [0, -15] })
             //     .setLngLat(feature.geometry.coordinates)
@@ -142,52 +142,52 @@ export default class Map extends React.Component {
             //     .addTo(map);
         });
 
-        // map.on("load", function () {
-        //     map.addSource("oli-test-source", {
-        //         type: "geojson",
-        //         data: {
-        //             features: [
-        //                 {
-        //                     type: "Feature",
-        //                     properties: {
-        //                         title: "Test test test",
-        //                         description:
-        //                             "Outdoor small fullcourt with chain baskets and playground floor.",
-        //                         "check-ins": 0,
-        //                     },
-        //                     geometry: {
-        //                         type: "Point",
-        //                         coordinates: [
-        //                             13.429247340184489, 52.493398614626405,
-        //                         ],
-        //                     },
-        //                 },
-        //             ],
-        //             type: "FeatureCollection",
-        //         },
-        //     });
-        //     map.addLayer({
-        //         id: "poi-labels",
-        //         type: "symbol",
-        //         source: "oli-test-source",
-        //         layout: {
-        //             "text-field": ["get", "description"],
-        //             "text-variable-anchor": ["top", "bottom", "left", "right"],
-        //             "text-radial-offset": 0.5,
-        //             "text-justify": "auto",
-        //             "icon-image": ["get", "icon"],
-        //         },
-        //     });
-        //     map.addLayer({
-        //         id: "oli-test-layer",
-        //         type: "circle",
-        //         source: "oli-test-source",
-        //         paint: {
-        //             "circle-radius": 10,
-        //             "circle-color": "#D21B1B",
-        //         },
-        //     });
-        // });
+        map.on("load", function () {
+            map.addSource("oli-test-source", {
+                type: "geojson",
+                data: {
+                    features: [
+                        {
+                            type: "Feature",
+                            properties: {
+                                title: "Test test test",
+                                description:
+                                    "Outdoor small fullcourt with chain baskets and playground floor.",
+                                "check-ins": 0,
+                            },
+                            geometry: {
+                                type: "Point",
+                                coordinates: [
+                                    13.429247340184489, 52.493398614626405,
+                                ],
+                            },
+                        },
+                    ],
+                    type: "FeatureCollection",
+                },
+            });
+            map.addLayer({
+                id: "poi-labels",
+                type: "symbol",
+                source: "oli-test-source",
+                layout: {
+                    "text-field": ["get", "description"],
+                    "text-variable-anchor": ["top", "bottom", "left", "right"],
+                    "text-radial-offset": 0.5,
+                    "text-justify": "auto",
+                    "icon-image": ["get", "icon"],
+                },
+            });
+            map.addLayer({
+                id: "oli-test-layer",
+                type: "circle",
+                source: "oli-test-source",
+                paint: {
+                    "circle-radius": 10,
+                    "circle-color": "#D21B1B",
+                },
+            });
+        });
     }
 
     render() {

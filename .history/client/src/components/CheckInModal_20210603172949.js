@@ -66,27 +66,15 @@ export default class CheckInModal extends React.Component {
         }
     }
 
-    //not done yet! should check which courts are within range
+    //not done! should check which courts are within range
     checkCourts() {
         console.log(courts.courts);
-        const match = courts.courts.find((item) => {
-            const diffLat = Math.abs(item.latitude - this.state.latitude);
-            const diffLng = Math.abs(item.longitude - this.state.longitude);
-            console.log("item.latitude: ", item.latitude);
-            console.log("item.longitude: ", item.longitude);
-            console.log("this.state.latitude: ", this.state.latitude);
-            console.log("this.state.longitude: ", this.state.longitude);
-            console.log("difference between Latitudes: ", diffLat);
-            console.log("difference between Longitudes: ", diffLng);
-
-            if (diffLat < 0.01 && diffLng < 0.01) {
-                console.log("In the vicinity!");
-            }
-            // item.latitude === this.state.latitude &&
-            //     item.longitude === this.state.longitude;
+        const a = courts.courts.find((item) => {
+            item.latitude === this.state.latitude &&
+                item.longitude === this.state.longitude;
         });
-        // if difference between own coordinates and coordinates of defined court coordinates are +- 0.00002, allow match! (math.abs)
-        console.log("match: ", match);
+        // if difference between own coordinates and coordinates of defined court coordinates are +- 0.00002, allow match!
+        console.log(a);
     }
 
     //add Court function
