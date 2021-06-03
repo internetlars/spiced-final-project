@@ -2,11 +2,10 @@ import React from "react";
 
 import mapboxgl from "!mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-// import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker } from "react-map-gl";
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
-
 export default class Map extends React.Component {
     constructor() {
         super();
@@ -53,29 +52,9 @@ export default class Map extends React.Component {
                 positionOptions: {
                     enableHighAccuracy: true,
                 },
-                trackUserLocation: false,
+                trackUserLocation: true,
             })
         );
-
-        // setUserLocation = () => {
-        //     navigator.geolocation.getCurrentPosition((position) => {
-        //         let setUserLocation = {
-        //             lat: position.coords.latitude,
-        //             long: position.coords.longitude,
-        //         };
-        //         let newViewport = {
-        //             height: "100vh",
-        //             width: "100vw",
-        //             latitude: position.coords.latitude,
-        //             longitude: position.coords.longitude,
-        //             zoom: 10,
-        //         };
-        //         this.setState({
-        //             viewport: newViewport,
-        //             userLocation: setUserLocation,
-        //         });
-        //     });
-        // };
 
         map.on("click", function (e) {
             var features = map.queryRenderedFeatures(e.point, {

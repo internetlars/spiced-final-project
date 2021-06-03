@@ -76,8 +76,6 @@ export default class CheckInModal extends React.Component {
         console.log(a);
     }
 
-    //add Court function
-
     render() {
         return (
             <div>

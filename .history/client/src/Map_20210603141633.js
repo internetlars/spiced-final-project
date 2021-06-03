@@ -2,11 +2,10 @@ import React from "react";
 
 import mapboxgl from "!mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-// import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker } from "react-map-gl";
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiaW50ZXJuZXRsYXJzIiwiYSI6ImNrcGR1bHdvNjFyZmQybnA3a2wyeHRpMzkifQ.B6TyPSQDOf0wX_VKW39bpg";
-
 export default class Map extends React.Component {
     constructor() {
         super();
@@ -53,7 +52,7 @@ export default class Map extends React.Component {
                 positionOptions: {
                     enableHighAccuracy: true,
                 },
-                trackUserLocation: false,
+                trackUserLocation: true,
             })
         );
 

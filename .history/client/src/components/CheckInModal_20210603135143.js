@@ -6,8 +6,8 @@ export default class CheckInModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            latitude: 0,
-            longitude: 0,
+            latitude: 52.496301,
+            longitude: 13.423492,
         };
 
         this.getLocation = this.getLocation.bind(this);
@@ -66,7 +66,6 @@ export default class CheckInModal extends React.Component {
         }
     }
 
-    //not done! should check which courts are within range
     checkCourts() {
         console.log(courts.courts);
         const a = courts.courts.find((item) => {
@@ -75,8 +74,6 @@ export default class CheckInModal extends React.Component {
         });
         console.log(a);
     }
-
-    //add Court function
 
     render() {
         return (

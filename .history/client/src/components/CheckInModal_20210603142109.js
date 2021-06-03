@@ -66,7 +66,7 @@ export default class CheckInModal extends React.Component {
         }
     }
 
-    //not done! should check which courts are within range
+    //not done
     checkCourts() {
         console.log(courts.courts);
         const a = courts.courts.find((item) => {
@@ -75,8 +75,6 @@ export default class CheckInModal extends React.Component {
         });
         console.log(a);
     }
-
-    //add Court function
 
     render() {
         return (
